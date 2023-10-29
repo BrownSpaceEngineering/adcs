@@ -2,8 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import sin, cos
 from abc import ABC, abstractmethod
+from colorama import Fore
+
 
 class Constants:
+    '''
+    Constants and assumptions used in the model
+    ALL UNITS IN SI UNLESS OTHERWISE SPECIFIED
+    '''
     # TODO: Link sources for constants
     CORE_PERMEABILITY = 100000           # relative permeability of permalloy
     CORE_DENSITY = 8700                  # kg/m3
@@ -13,8 +19,9 @@ class Constants:
     SATELLITE_LENGTH = 0.3               # m
     SATELLITE_WIDTH = 0.1                # m
     
-    SATELLITE_SURFACE_AREA = (4 * SATELLITE_LENGTH * SATELLITE_WIDTH) + (2 * SATELLITE_WIDTH * SATELLITE_WIDTH) #m2
-   
+    TOTAL_SATELLITE_SURFACE_AREA = (4 * SATELLITE_LENGTH * SATELLITE_WIDTH) + (2 * SATELLITE_WIDTH * SATELLITE_WIDTH) #m2
+    LARGEST_SURFACE_AREA = SATELLITE_LENGTH * SATELLITE_WIDTH #m2
+
     # long axis               
     INERTIA_Z = 1/12 * SATELLITE_MASS * (SATELLITE_WIDTH**2 + SATELLITE_LENGTH**2)
     # short axes
@@ -31,6 +38,18 @@ class Constants:
     MIN_TEMP = -80                       # Celsius
 
     MU_0 = 4 * np.pi * 10**-7            # H/m
+
+    ## DISTURBANCE ASSUMTIONS ##
+    ALTITUDE = 400000                    # m
+    EARTH_RADIUS = 6378140               # m
+    SEMIMAJOR_AXIS = ALTITUDE + EARTH_RADIUS # m
+    EARTH_GRAV_CONSTANT = 3.986 * 10**14 # m3/s2
+    SOLAR_CONSTANT = 1367                # W/m2 (solar radiation flux constant)
+    SPEED_OF_LIGHT = 3 * 10**8           # m/s
+    REFLECT_FACTOR = 0.6                 # reflectance factor of satellite; ranges on [0, 1]
+    ATMOSPHERIC_DENSITY = 2.62 * 10**-12 # kg/m3 (mean atmospheric density at 400km)
+    DRAG_COEFF = 2.25                    # drag coefficient of satellite; typ. [2, 2.5]
+    SATELLITE_VELOCITY = 2 * np.pi * SEMIMAJOR_AXIS / SECONDS_PER_ORBIT # m/s approximation
 
 class Magnetorquer(ABC):
     '''
@@ -88,7 +107,6 @@ class Magnetorquer(ABC):
         cross_section = np.pi * (Constants.WIRE_DIAMETER / 2) ** 2
         return resist * self.wire_length() / cross_section
 
-
 class CoreMagnetorquer(Magnetorquer):
 
     def __init__(self, current, core_radius, core_length, layers, temp):
@@ -123,7 +141,8 @@ class CoreMagnetorquer(Magnetorquer):
         out += f"Core length:                              {self.core_length * 100} cm\n"
         out += f"Number of Turns:                          {self.turns}\n"
         out += f"Number of Layers:                         {self.layers}\n"
-        out += f"Dipole Moment:                            {self.dipole_moment()} A*m^2\n"
+        out += Fore.CYAN
+        out += f"Dipole Moment:                            {self.dipole_moment()} A*m^2\n" + Fore.RESET
         out += f"Total Mass:                               {self.total_mass} kg\n"
         out += f"Wire Length:                              {self.wire_length()} m\n"
         out += f"Theoretical Wire Resistance:              {self.wire_resistance(self.temp)} Ohms\n"
@@ -160,7 +179,8 @@ class AirMagnetorquer(Magnetorquer):
         out += f"####################################################################\n"
         out += f"Number of Turns:                          {self.turns}\n"
         out += f"Number of Layers:                         {self.layers}\n"
-        out += f"Dipole Moment:                            {self.dipole_moment()} A*m^2\n"
+        out += Fore.CYAN
+        out += f"Dipole Moment:                            {self.dipole_moment()} A*m^2\n" + Fore.RESET
         out += f"Total Mass:                               {self.total_mass} kg\n"
         out += f"Wire Length:                              {self.wire_length()} m\n"
         out += f"Theoretical Wire Resistance:              {self.wire_resistance(self.temp)} Ohms\n"
@@ -231,36 +251,34 @@ class SingleAxisDipoleModel:
     
 class DisturbanceModel:
     def __init__(self, orbit_altitude) -> None:
-        self.altitude = (orbit_altitude + 6378.14) * 1000 #adds radius of the Earth to get orbital semimajor axis (m)
+        '''
+        param orbit_altitude: altitude of orbit in meters
+        '''
+        self.altitude = (orbit_altitude + Constants.EARTH_RADIUS) #adds radius of the Earth to get orbital semimajor axis (m)
 
     def gravity_gradient(self):
-        mu = 3.986 * (10**14) #Earth's gravity constant (m3/s2)
         z_axis_deviation = np.pi #6*np.pi/180 #the maximum deviation of the Z-axis from local vertical (rad) -- TODO: old spreadsheet uses 6 degrees?
+        max_gravity_torque = (3 * Constants.EARTH_GRAV_CONSTANT)/(2 * (self.altitude ** 3)) * abs(Constants.INERTIA_Z - Constants.INERTIA_XY) * abs(sin(2*z_axis_deviation))
 
-        max_gravity_torque = (3 * mu)/(2 * (self.altitude ** 3)) * abs(Constants.INERTIA_Z - Constants.INERTIA_XY) * abs(sin(2*z_axis_deviation))
+        # ? Alternative version for calculating grav. grad. according to: https://drive.google.com/file/d/1LQdQkFrIOopaMiTIUJqKHOhaPx6leuI8/view?usp=sharing
+        # (I_max-I_min) * 3 * (orbital angular velocity rad/s)^3
+        alt_max_grav_torque = (Constants.INERTIA_Z - Constants.INERTIA_XY) * 3 * (2 * np.pi / Constants.SECONDS_PER_ORBIT)**3
+        # print("ALT MAX GRAV", alt_max_grav_torque)
 
         return max_gravity_torque
     
     def solar_radiation(self):
-        solar_constant = 1367    #solar radiation flux constant (W/m2)
-        light_speed = 3*(10**8)  #m/s
-        
-        reflectance_factor = 0.6 #ranges on [0, 1]
         angle_incidence_to_sun = 0 #(rad) chosen to maximize term
         pressure_differential = Constants.SATELLITE_LENGTH/2 #supposed to be center_solar_pressure - center_gravity. Chose the magnitude of longest distance from surface to center
 
-        F = (solar_constant / light_speed) * Constants.SATELLITE_SURFACE_AREA * (1 + reflectance_factor) * cos(angle_incidence_to_sun)
+        F = (Constants.SOLAR_CONSTANT / Constants.SPEED_OF_LIGHT) * Constants.LARGEST_SURFACE_AREA * (1 + Constants.REFLECT_FACTOR) * cos(angle_incidence_to_sun)
 
         max_solar_torque = F*(pressure_differential)
         
         return max_solar_torque
     
     def aerodynamic(self):
-        atmospheric_density = 2.62*(10**-12) #mean atmospheric density at 400km (kg/m3) 
-        drag_coefficient = 2.25 #usually between 2 and 2.5
-        satellite_velocity = 2*np.pi *self.altitude / Constants.SECONDS_PER_ORBIT #approximation (m/s)
-
-        F = 0.5 * atmospheric_density * drag_coefficient * Constants.SATELLITE_SURFACE_AREA * (satellite_velocity ** 2)
+        F = 0.5 * Constants.ATMOSPHERIC_DENSITY * Constants.DRAG_COEFF * Constants.LARGEST_SURFACE_AREA * (Constants.SATELLITE_VELOCITY ** 2)
         pressure_differential = Constants.SATELLITE_LENGTH/2 #supposed to be center_aerodynamic_pressure - center_gravity. Chose the magnitude of longest distance from surface to center
 
         aerodynamic_torque = F * pressure_differential
@@ -281,10 +299,14 @@ class DisturbanceModel:
         return out
 
 def rigid_body_torque(mass, angle, diameter, time):
-    # In: mass in kg, angle of motion in degrees, diameter of rotating body in m, time to rotate in s
-    # Out: a torque to induce motion in specified time in Nm 
-
-    d = diameter * 3.14 * (angle / 360)
+    '''
+    param mass: mass of satellite in kg
+    param angle: angle of motion in degrees
+    param diameter: diameter of rotating body in m
+    param time: time to rotate in s
+    return: a torque to induce motion in specified time in Nm
+    '''
+    d = diameter * np.pi * (angle / 360)
     v = d / time 
     r = diameter/2
     a = v/(r**2)
@@ -292,10 +314,28 @@ def rigid_body_torque(mass, angle, diameter, time):
     torque = F * d
     return torque
 
+# TODO: Review alternative rigid body torque function
+
+def alt_rigid_body_torque(angle_to_move, initial_angular_velocity, time):
+    '''
+    param angle_to_move: angle of motion in degrees
+    param initial_angular_velocity: initial angular velocity in rad/s
+    param time: time to rotate in s
+    return: a torque to induce motion in specified time in Nm
+    '''
+    theta = angle_to_move
+    omega_i = initial_angular_velocity
+    alpha = 2*(theta - omega_i*time)/time**2
+    tau = Constants.INERTIA_Z * alpha
+    return tau
+
+
+
 def calculate_bfield(r, m):
     '''
     param r: position vector of observation
     param m: magnetic dipole moment vector
+    return: magnetic field vector at vector distance r from dipole moment m
     '''
     return Constants.MU_0 / (4 * np.pi) * ( (3 * r * np.dot(m,r)) / np.linalg.norm(r)**5 - m / np.linalg.norm(r)**3 )
 
@@ -305,61 +345,63 @@ def calculate_bfield(r, m):
 ##             INPUTS               ##
 ######################################
 
-current = 0.08                       # Amps - 0.1A max through 30 AWG wire
+current = 0.05                       # Amps - 0.1A max through 30 AWG wire
 temp = 20                            # Celsius
 
 m1_radius = 0.005
-m1_length = 0.06
-m1_layers = 5
+m1_length = 0.045
+m1_layers = 12
 
 m2_radius = 0.005
 m2_length = 0.06
 m2_layers = 8
 
-m_3_side_length = 0.07
-m_3_length = 0.02
-m_3_layers = 6
+m_3_side_length = 0.05
+m_3_length = 0.03
+m_3_layers = 5
 
-orbit_altitude = 400
 ######################################
 
 m1 = CoreMagnetorquer(current, m1_radius, m1_length, m1_layers, temp)
 m2 = CoreMagnetorquer(current, m2_radius, m2_length, m2_layers, temp)
 am = AirMagnetorquer(current, m_3_side_length, m_3_length, m_3_layers, temp)
 
+print(m1)
+print(m2)
+print(am)
+
 sim = SingleAxisDipoleModel(am, 0.01, 1)
-sim.plot()
+# sim.plot()
 print(sim) 
 
 print(f"MAX POSSIBLE POWER USAGE (Max voltage method):     {(m1.max_voltage + m2.max_voltage + am.max_voltage) * current} W")
 print(f"MAX POSSIBLE POWER USAGE (9.9 * Current Method):   {9.9 * current} W\n")
 
-disturbances = DisturbanceModel(orbit_altitude)
+disturbances = DisturbanceModel(Constants.ALTITUDE)
 print(disturbances)
 
 print(f"MINIMUM TORQUE GENERATED:                          {m1.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR} Nm")
 print(f"RIGID BODY PREDICTED TORQUE REQUIREMENT:           {rigid_body_torque(Constants.SATELLITE_MASS, sim.theta[0], Constants.SATELLITE_LENGTH, sim.convergence_time)} Nm\n")
+print(f"ALT RIGID BODY PREDICTED TORQUE REQUIREMENT:       {alt_rigid_body_torque(np.pi,0,Constants.SECONDS_PER_ORBIT)} Nm\n")
 
-print("B field (T)", np.linalg.norm(calculate_bfield(np.array([0,0,0.05]), np.array([0,0,0.1]))))
-print("B field (mT)", np.linalg.norm(calculate_bfield(np.array([0.05,0,0]), np.array([0,0,0.1])))*10**3)
 
 if (m1.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR) < disturbances.total_disturbance():
     out =  "\n-------------------------------------------------------------------\n"
     out += "!    MODEL FAILS - DISTURBANCE TORQUES EXCEED GENERATED TORQUE    !"
     out += "\n-------------------------------------------------------------------\n"
-    print(out)
+    print(Fore.RED + out + Fore.RESET)
 elif ((m1.max_voltage + m2.max_voltage + am.max_voltage) * current) > 0.84:
     out =  "\n-------------------------------------------------------------------\n"
     out += "!         MODEL FAILS - POWER REQUIREMENT EXCEEDS BUDGET          !"
     out += "\n-------------------------------------------------------------------\n"
-    print(out)
+    print(Fore.RED + out + Fore.RESET)
 elif (sim.convergence_time / Constants.SECONDS_PER_ORBIT) > 1:
     out =  "\n-------------------------------------------------------------------\n"
     out += "!       MODEL FAILS - CONVERGENCE TIME EXCEEDS ONE ORBIT          !"
     out += "\n-------------------------------------------------------------------\n"
-    print(out)
+    print(Fore.RED + out + Fore.RESET)
 else:
     out =  "\n-------------------------------------------------------------------\n"
     out += "!                          MODEL PASSES                           !"
     out += "\n-------------------------------------------------------------------\n"
-    print(out)
+    print(Fore.GREEN + out + Fore.RESET)
