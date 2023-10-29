@@ -345,7 +345,7 @@ def calculate_bfield(r, m):
 ##             INPUTS               ##
 ######################################
 
-current = 0.05                       # Amps - 0.1A max through 30 AWG wire
+current = 0.075                       # Amps - 0.1A max through 30 AWG wire
 temp = 20                            # Celsius
 
 m1_radius = 0.005
@@ -356,9 +356,9 @@ m2_radius = 0.005
 m2_length = 0.06
 m2_layers = 8
 
-m_3_side_length = 0.05
-m_3_length = 0.03
-m_3_layers = 5
+m_3_side_length = 0.045
+m_3_length = 0.02
+m_3_layers = 6
 
 ######################################
 
@@ -381,6 +381,7 @@ disturbances = DisturbanceModel(Constants.ALTITUDE)
 print(disturbances)
 
 print(f"MINIMUM TORQUE GENERATED:                          {m1.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR} Nm")
+print(f"MINIMUM TORQUE GENERATED:                          {am.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR} Nm")
 print(f"RIGID BODY PREDICTED TORQUE REQUIREMENT:           {rigid_body_torque(Constants.SATELLITE_MASS, sim.theta[0], Constants.SATELLITE_LENGTH, sim.convergence_time)} Nm\n")
 print(f"ALT RIGID BODY PREDICTED TORQUE REQUIREMENT:       {alt_rigid_body_torque(np.pi,0,Constants.SECONDS_PER_ORBIT)} Nm\n")
 
