@@ -9,7 +9,7 @@
 
 
 ## Summary
-<img src="Brown_CubSat_ADCS_Simulink.png" width="60%" alt="ADCS Simlink Summary">
+<img src="Brown_CubSat_ADCS_Simulink.png" width="70%" alt="ADCS Simlink Summary">
 
 ## What Has Been Implemented
 - `computeAttitudeError`: take current and reference quaternion and compute the error quaternion
@@ -22,7 +22,7 @@
 - `visualizeSatellite`: CubeSat orbiting visualization
 
 ## How to Run
-- Install `MATLAB` with `Simulink` and `Aerospace Toolbox` package. The version I use is `MATLAB_R2023b`.
+- Install `MATLAB` with `Simulink` and `Aerospace Toolbox` packages. The version I use is `MATLAB_R2023b`.
 - Run [adcs_20231001_beforerun.mat](adcs_20231001_beforerun.mat) first, this creates an Earth-centered spatial grid for visualization.
 - Then, run the Simulink file [adcs_visual_20230921.slx](adcs_visual_20230921.slx).
 - To visualize the CubeSat orbiting, click the `visualizeSatellite` block at the very right side, and then hit the `Run` button. This will give you the orbiting simulation.
