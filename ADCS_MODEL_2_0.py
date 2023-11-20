@@ -68,8 +68,8 @@ class Magnetorquer(ABC):
         self.core_length = core_length
         self.layers = layers
         self.temp = temp
-        self.turns_per_layer = core_length / Constants.WIRE_DIAMETER
-        self.turns = int(np.floor(self.turns_per_layer * layers))
+        self.turns_per_layer = np.floor(core_length / Constants.WIRE_DIAMETER)
+        self.turns = self.turns_per_layer * layers
         self.total_mass = self.core_mass() + self.wire_mass()
 
         # Voltage required to achieve given current
@@ -265,7 +265,7 @@ class DisturbanceModel:
         alt_max_grav_torque = (Constants.INERTIA_Z - Constants.INERTIA_XY) * 3 * (2 * np.pi / Constants.SECONDS_PER_ORBIT)**3
         # print("ALT MAX GRAV", alt_max_grav_torque)
 
-        return max_gravity_torque
+        return alt_max_grav_torque
     
     def solar_radiation(self):
         angle_incidence_to_sun = 0 #(rad) chosen to maximize term
@@ -350,15 +350,15 @@ temp = 20                            # Celsius
 
 m1_radius = 0.005
 m1_length = 0.045
-m1_layers = 12
+m1_layers = 6
 
 m2_radius = 0.005
 m2_length = 0.06
 m2_layers = 8
 
 m_3_side_length = 0.045
-m_3_length = 0.02
-m_3_layers = 6
+m_3_length = 0.025
+m_3_layers = 5
 
 ######################################
 
@@ -366,8 +366,8 @@ m1 = CoreMagnetorquer(current, m1_radius, m1_length, m1_layers, temp)
 m2 = CoreMagnetorquer(current, m2_radius, m2_length, m2_layers, temp)
 am = AirMagnetorquer(current, m_3_side_length, m_3_length, m_3_layers, temp)
 
-print(m1)
-print(m2)
+print(m1.wire_length())
+print(m2.wire_length())
 print(am)
 
 sim = SingleAxisDipoleModel(am, 0.01, 1)
@@ -406,3 +406,6 @@ else:
     out += "!                          MODEL PASSES                           !"
     out += "\n-------------------------------------------------------------------\n"
     print(Fore.GREEN + out + Fore.RESET)
+
+
+print(m1)
