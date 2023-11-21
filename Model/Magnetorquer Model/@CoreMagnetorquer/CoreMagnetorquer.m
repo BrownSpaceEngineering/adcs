@@ -1,24 +1,26 @@
 classdef CoreMagnetorquer < Magnetorquer
     properties
-        core_radius;
-        total_radius;
-        dipole_moment;
-        wire_length;
-        core_mass;
+        core_radius=0;
+        total_radius=0;
+        wire_length=0;
+        core_mass=0;
     end
     methods
-        function obj = CoreMagnetorquer(current, core_radius, core_length, layers, temp)
-            obj@Magnetorquer(current, core_length, layers, temp);
+        function obj = CoreMagnetorquer(core_radius, core_length, layers, temp)
+            obj@Magnetorquer(core_length, layers, temp);
             obj.core_radius = core_radius;
             obj.total_radius = core_radius + obj.wire_height;
-            obj.dipole_moment = obj.calc_dipole_moment;
             obj.wire_length = obj.calc_wire_length;
             obj.core_mass = obj.calc_core_mass;
             obj.calculate_total_mass
-            obj.calculate_voltage
+            % obj.calculate_voltage
         end
-        function moment = calc_dipole_moment(obj)
-            r = obj.core_radius; N = obj.turns; I = obj.current; mu = Constants.CORE_PERMEABILITY; L = obj.core_length;
+        function moment = calc_dipole_moment(obj, current)
+            if current > Constants.MAX_CURRENT
+                disp('Current %f exceeds maximum current of %f A for 30 AWG wire', current, Constants.MAX_CURRENT)
+            end
+            r = obj.core_radius; N = obj.turns; I = current; 
+            mu = Constants.CORE_PERMEABILITY; L = obj.core_length;
             Nd = (4*(log(L/r) - 1))/((L/r)^2 - 4*(log(L/r)));
             moment = pi * (r^2) * N * I * (1 + ((mu - 1)/(1 + ((mu - 1) * Nd))));
         end

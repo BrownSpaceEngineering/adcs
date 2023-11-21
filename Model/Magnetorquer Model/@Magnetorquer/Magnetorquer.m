@@ -1,6 +1,5 @@
 classdef Magnetorquer < handle
     properties
-        current
         core_length
         layers
         temp
@@ -12,19 +11,15 @@ classdef Magnetorquer < handle
         wire_height
     end
     methods
-        function obj = Magnetorquer(current, core_length, layers, temp)
-            if current > Constants.MAX_CURRENT
-                error('Current exceeds maximum current of' + Constants.MAX_CURRENT + 'A for 30 AWG wire')
-            end
-            obj.current = current;
+        function obj = Magnetorquer(core_length, layers, temp)
             obj.core_length = core_length;
             obj.layers = layers;
             obj.temp = temp;
             obj.turns_per_layer = floor(core_length / Constants.WIRE_DIAMETER);
             obj.turns = obj.turns_per_layer * layers;
             obj.total_mass = obj.calc_core_mass + obj.wire_mass;
-            obj.voltage = current * obj.wire_resistance(obj.temp);
-            obj.max_voltage = current * obj.wire_resistance(Constants.MAX_TEMP);
+            % obj.voltage = current * obj.wire_resistance(obj.temp);
+            % obj.max_voltage = current * obj.wire_resistance(Constants.MAX_TEMP);
             obj.wire_height = Constants.WIRE_DIAMETER * ( 1 + sqrt(3) * (layers - 1) );
         end
         function mass = wire_mass(obj)
@@ -40,10 +35,10 @@ classdef Magnetorquer < handle
         function calculate_total_mass(obj)
             obj.total_mass = obj.core_mass() + obj.wire_mass();
         end
-        function calculate_voltage(obj)
-            obj.voltage = obj.current * obj.wire_resistance(obj.temp);
-            obj.max_voltage = obj.current * obj.wire_resistance(Constants.MAX_TEMP);
-        end
+        % function calculate_voltage(obj)
+        %     obj.voltage = obj.current * obj.wire_resistance(obj.temp);
+        %     obj.max_voltage = obj.current * obj.wire_resistance(Constants.MAX_TEMP);
+        % end
     end
     methods(Abstract)
         calc_dipole_moment(obj)
