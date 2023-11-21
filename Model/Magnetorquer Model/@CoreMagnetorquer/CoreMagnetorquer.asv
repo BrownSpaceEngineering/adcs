@@ -25,11 +25,12 @@ classdef CoreMagnetorquer < Magnetorquer
             moment = pi * (r^2) * N * I * (1 + ((mu - 1)/(1 + ((mu - 1) * Nd))));
         end
 
-        function I = calc_current(obj, dipole_moment)
+        function current = calc_current(obj, dipole_moment)
             r = obj.core_radius; N = obj.turns; 
             mu = Constants.CORE_PERMEABILITY; L = obj.core_length;
             Nd = (4*(log(L/r) - 1))/((L/r)^2 - 4*(log(L/r)));
-            I = dipole_moment / (pi * (r^2) * N * (1 + ((mu - 1)/(1 + ((mu - 1) * Nd)))));
+            moment = pi * (r^2) * N * I * (1 + ((mu - 1)/(1 + ((mu - 1) * Nd))));
+            I = moment / (pi * (r^2) * N )
         end
 
         function mass = calc_core_mass(obj)

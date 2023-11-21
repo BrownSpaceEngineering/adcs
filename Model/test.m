@@ -18,3 +18,5 @@ cm2 = CoreMagnetorquer(core_radius, core_length, layers, temp);
 am = AirMagnetorquer(0.045, 0.025, 5, 20);
 
 cm.calc_dipole_moment(0.1)
+
+igrfmagm(400000, 41, 71, decyear(datetime('now')))

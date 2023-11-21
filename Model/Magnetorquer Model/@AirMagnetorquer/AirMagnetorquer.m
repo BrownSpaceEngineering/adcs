@@ -22,6 +22,9 @@ classdef AirMagnetorquer < Magnetorquer
             end
             moment = obj.side_length^2 * obj.turns * current;
         end
+        function I = calc_current(obj, dipole_moment)
+            I = dipole_moment / (obj.turns * obj.side_length^2);
+        end
         function mass = calc_core_mass(obj)
             mass = 0;
         end
