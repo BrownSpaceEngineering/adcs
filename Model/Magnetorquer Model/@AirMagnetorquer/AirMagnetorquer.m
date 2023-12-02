@@ -4,6 +4,7 @@ classdef AirMagnetorquer < Magnetorquer
         total_side_length=0;
         wire_length=0;
         core_mass=0;
+        max_dipole=0;
     end
     methods
         function obj = AirMagnetorquer(side_length, core_length, layers, temp)
@@ -15,12 +16,16 @@ classdef AirMagnetorquer < Magnetorquer
             % obj.dipole_moment = obj.calc_dipole_moment();
             obj.calculate_total_mass();
             % obj.calculate_voltage();
+            obj.max_dipole = obj.calc_max_dipole();
         end
         function moment = calc_dipole_moment(obj, current)
             if current > Constants.MAX_CURRENT
                 disp('Current %f exceeds maximum current of %f A for 30 AWG wire', current, Constants.MAX_CURRENT)
             end
             moment = obj.side_length^2 * obj.turns * current;
+        end
+        function md = calc_max_dipole(obj)
+            md = calc_dipole_moment(obj, Constants.MAX_CURRENT);
         end
         function I = calc_current(obj, dipole_moment)
             I = dipole_moment / (obj.turns * obj.side_length^2);

@@ -4,6 +4,7 @@ classdef CoreMagnetorquer < Magnetorquer
         total_radius=0;
         wire_length=0;
         core_mass=0;
+        max_dipole=0;
     end
     methods
         function obj = CoreMagnetorquer(core_radius, core_length, layers, temp)
@@ -13,6 +14,7 @@ classdef CoreMagnetorquer < Magnetorquer
             obj.wire_length = obj.calc_wire_length;
             obj.core_mass = obj.calc_core_mass;
             obj.calculate_total_mass
+            obj.max_dipole = obj.calc_max_dipole();
             % obj.calculate_voltage
         end
         function moment = calc_dipole_moment(obj, current)
@@ -24,7 +26,9 @@ classdef CoreMagnetorquer < Magnetorquer
             Nd = (4*(log(L/r) - 1))/((L/r)^2 - 4*(log(L/r)));
             moment = pi * (r^2) * N * I * (1 + ((mu - 1)/(1 + ((mu - 1) * Nd))));
         end
-
+        function md = calc_max_dipole(obj)
+            md = calc_dipole_moment(obj, Constants.MAX_CURRENT);
+        end
         function I = calc_current(obj, dipole_moment)
             r = obj.core_radius; N = obj.turns; 
             mu = Constants.CORE_PERMEABILITY; L = obj.core_length;

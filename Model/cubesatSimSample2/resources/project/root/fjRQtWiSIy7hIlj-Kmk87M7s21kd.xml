@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Category Location="FileClassCategory">
+    <Info DataType="None" Name="Classification" ReadOnly="1" SingleValued="1"/>
+    <Label Location="0a135fd4-29fb-4559-825d-b0e1def8fe1c">
+        <Info Name="Vehicle Dynamics" ReadOnly="WRITABLE"/>
+    </Label>
+    <Label Location="3fd7ccf4-6ff6-4855-90cd-e774d42a0644">
+        <Info Name="Graphics" ReadOnly="WRITABLE"/>
+    </Label>
+    <Label Location="45c6f540-c195-4af8-a422-1a2cfc536b31">
+        <Info Name="Visualization" ReadOnly="WRITABLE"/>
+    </Label>
+    <Label Location="60ca2b6c-acf8-4bef-a9f5-5e7586659f6f">
+        <Info Name="Flight Hardware" ReadOnly="WRITABLE"/>
+    </Label>
+    <Label Location="artifact">
+        <Info Name="Artifact"/>
+    </Label>
+    <Label Location="ca98a2f5-ab76-4d1b-91a2-a910b4fc15df">
+        <Info Name="Space Environment" ReadOnly="WRITABLE"/>
+    </Label>
+    <Label Location="convenience">
+        <Info Name="Convenience"/>
+    </Label>
+    <Label Location="d3cf23ab-cb47-4d59-819a-4976d9e9b26a">
+        <Info Name="Flight Software" ReadOnly="WRITABLE"/>
+    </Label>
+    <Label Location="derived">
+        <Info Name="Derived"/>
+    </Label>
+    <Label Location="design">
+        <Info Name="Design"/>
+    </Label>
+    <Label Location="e988eea7-4b5d-4f49-ba29-9eada75865d1">
+        <Info Name="Mission Analysis" ReadOnly="WRITABLE"/>
+    </Label>
+    <Label Location="none">
+        <Info Name="None"/>
+    </Label>
+    <Label Location="other">
+        <Info Name="Other"/>
+    </Label>
+    <Label Location="test">
+        <Info Name="Test" ReadOnly="READ_ONLY"/>
+    </Label>
+</Category>

@@ -45,5 +45,6 @@ classdef Magnetorquer < handle
         calc_wire_length(obj)
         calc_core_mass(obj)
         calc_current(obj)
+        calc_max_dipole(obj)
     end
 end

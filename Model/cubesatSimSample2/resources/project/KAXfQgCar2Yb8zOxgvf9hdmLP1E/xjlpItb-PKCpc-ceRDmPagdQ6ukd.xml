@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Info File="CubesatModel/asbCubeSat.slx" GroupUUID="2bbc6a73-cbe2-4d7a-9bed-b589f7de956b" Icon="" Name="Open CubeSat Model" Type="StartUp" Visible="1">
+    <Extension Name="StartUpPrev" Value="2780f370-6a27-43e4-9b90-95b8c1b38faf"/>
+</Info>
