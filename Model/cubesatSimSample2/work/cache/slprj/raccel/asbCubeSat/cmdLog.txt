@@ -1,0 +1,22 @@
+	---> Registering atexit function
+	---> Initialize gblExecutionInfo
+	---> i18n_init
+	---> Parse Arguments
+The argument '-tgtconn_server_info_file' passed to rtiostream_tcpip is not valid and will be ignored.
+The argument 'C:\Users\bobow\AppData\Local\Temp\tgtconnp32c4ac8a_4cf0_4774_9dfd_a0b877745e9d.info' passed to rtiostream_tcpip is not valid and will be ignored.
+The argument '-tgtconn_port' passed to rtiostream_tcpip is not valid and will be ignored.
+The argument '0' passed to rtiostream_tcpip is not valid and will be ignored.
+Firewall Rule Add failed: 80070005
+	---> SetupExecutionServices
+	---> sdiInitializeForHostBasedTarget
+	---> Initialize the model
+	---> rsimLoadOptionsFromMATFile
+	---> ssRunSimulation
+	---> slsaFreeOPModelData
+	---> rt_FreeParamStructs
+	---> TgtConnTerm
+	---> rtwISigstreamManagerDestroyInstance
+	---> rtwLoggingIntervalDestroyInstance
+	---> rt_RapidReleaseDiagLoggerDB
+	---> rt_RapidFreeGbls
+	---> rtDestroyRevalMgr

@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MF0 version="1.1" packageUris="http://schema.mathworks.com/mf0/slsa_mm_parameter_tuning/R2021b">
+  <slsa.mm.parametertuning.VariableRegistry type="slsa.mm.parametertuning.VariableRegistry" uuid="190f2f9e-85d1-47bb-a30f-e59e3081cabc">
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="b6cf69cc-8d32-4c75-a060-15acc1c7fe5c">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Control Sensors/Band-Limited White Noise/Output</blockPath>
+      <parameterName>Gain</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="2819291c-13cb-4bc0-bebf-f2d2be78748e"/>
+      <valueAttributes type="slsa.mm.parametertuning.ValueAttributes" uuid="cda34921-fb98-42af-bc8f-4815d51ce3a1">
+        <className>double</className>
+        <dimensions>1</dimensions>
+        <dimensions>3</dimensions>
+      </valueAttributes>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="76098356-8e08-469f-b97c-d521260d3ea7">
+      <blockPath>asbCubeSat/Enviroment Models/Digital Clock</blockPath>
+      <parameterName>SampleTime</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="7b9eead7-ce58-4194-acfe-c308f6f9623d"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="58d7e597-e18b-44d2-a2c3-cf266d8adfb2">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/Common Time  Calculation/Julian Date Conversion/Index</blockPath>
+      <parameterName>Value</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="3ec0f6d1-2416-4577-9771-e38a580199ca"/>
+      <valueAttributes type="slsa.mm.parametertuning.ValueAttributes" uuid="50ce088e-31e8-4d44-b411-ac2629804d9b">
+        <className>double</className>
+        <dimensions>1</dimensions>
+        <dimensions>1</dimensions>
+      </valueAttributes>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="98535bf5-9a2c-425a-b054-1a162deda0db">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction/Celestial motion of the CIP/P03 Precession/Y/Constant</blockPath>
+      <parameterName>Value</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="0cffccd4-ed72-4238-8a87-eaa3011340c8"/>
+      <valueAttributes type="slsa.mm.parametertuning.ValueAttributes" uuid="5fd5b572-0299-4063-8b14-8bbbffd2f54e">
+        <className>double</className>
+        <dimensions>1275</dimensions>
+        <dimensions>17</dimensions>
+      </valueAttributes>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="8d1bd28a-1596-48e0-b2cf-7089f5b501d7">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction/Celestial motion of the CIP/P03 Precession/X/Constant</blockPath>
+      <parameterName>Value</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="c715ea86-e605-413e-a715-c6c859d038dd"/>
+      <valueAttributes type="slsa.mm.parametertuning.ValueAttributes" uuid="39e02a42-9f71-44de-a403-e522208f0086">
+        <className>double</className>
+        <dimensions>1600</dimensions>
+        <dimensions>17</dimensions>
+      </valueAttributes>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="ad225f97-e945-4565-989b-58ee73b6f58a">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction/Celestial motion of the CIP/P03 Precession/S/Constant</blockPath>
+      <parameterName>Value</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="d310b32f-07bf-4b15-9f46-f3325ad00146"/>
+      <valueAttributes type="slsa.mm.parametertuning.ValueAttributes" uuid="d7353eb9-d166-48c8-b66d-dda11eaae892">
+        <className>double</className>
+        <dimensions>66</dimensions>
+        <dimensions>11</dimensions>
+      </valueAttributes>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="91868100-ed39-4564-a496-a8c9282938d5">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction/Additional Time Calculations/Julian Date Conversion/Index</blockPath>
+      <parameterName>Value</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="5673daf1-392d-4449-b496-5c40ca990c7e"/>
+      <valueAttributes type="slsa.mm.parametertuning.ValueAttributes" uuid="378d70c4-9267-43b8-a082-6afa390d2b5a">
+        <className>double</className>
+        <dimensions>1</dimensions>
+        <dimensions>1</dimensions>
+      </valueAttributes>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="64cc0ff6-5fd9-43b7-aa40-5567db83a31f">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Control Sensors/Band-Limited White Noise/White Noise</blockPath>
+      <parameterName>SampleTime</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="b8a8e2aa-bed0-425e-889e-d01c972c795b"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="8c1987d2-0cb1-4f76-8137-d2b5a29c4257">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Spacecraft Dynamics</blockPath>
+      <parameterName>attitude</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="841da921-e61a-4528-9df5-1505b5ffec6f"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="4c18dc78-c3e9-4a0b-9f00-8c509c707fae">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Control Sensors/Unit Delay</blockPath>
+      <parameterName>SampleTime</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="7b9eead7-ce58-4194-acfe-c308f6f9623d"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="7937c246-4f29-43a7-ae3f-fd93a79f75c7">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Spacecraft Dynamics</blockPath>
+      <parameterName>startDate</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="70e3154f-6f8b-47b6-b13e-3b82c4819449"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="106cbd81-0ca5-4d2a-bf68-f13743891fc6">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Spacecraft Dynamics</blockPath>
+      <parameterName>mass</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="2e9f1e17-884a-4da9-9538-630961c0f85a"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="e6de6454-54f2-4ad6-8ad7-d47020db2ce0">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Spacecraft Dynamics</blockPath>
+      <parameterName>attitudeRate</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="6aae4aff-d68d-45c5-8651-d97f971a15d3"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="a6c11f55-c200-4e5b-a01d-257ac39960ea">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Spacecraft Dynamics</blockPath>
+      <parameterName>inertia</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="2d6e52aa-3f98-4e68-9106-26d4570e4a2a"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="ce2aed97-4fa4-4cf5-ae9a-1756777e6a24">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Spacecraft Dynamics</blockPath>
+      <parameterName>inertialPosition</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="60ef06f8-d76f-486b-9159-04e954da440b"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <blockParameters type="slsa.mm.parametertuning.BlockParameter" uuid="ba82de7d-fc7b-4a7f-8f11-289392e12935">
+      <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Spacecraft Dynamics</blockPath>
+      <parameterName>inertialVelocity</parameterName>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="2d73aeaf-a3ac-4989-b0b0-cc9ace3be264"/>
+      <isTunable>false</isTunable>
+    </blockParameters>
+    <defaultValueCachePath>C:\ComputerScience\BSE\adcs\Model\cubesatSimSample2\work\cache\slprj\raccel\asbCubeSat\asbCubeSat_default_variable_values.mat</defaultValueCachePath>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="0a96be60-9990-4059-b5b3-78bee9a5e2d5">
+      <expression>17</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="a0c4d463-a3ac-42a7-b9b8-6281c935d41f"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="ca45abe6-bd0c-472b-a6a0-d51986448454">
+      <expression>3e-8*[1,1,1]</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="dbf73e1b-b3a9-40be-aec5-c62d2e02f538"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="7b9eead7-ce58-4194-acfe-c308f6f9623d">
+      <expression>CubeSatTimeStep</expression>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="76098356-8e08-469f-b97c-d521260d3ea7"/>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="563e9b42-40c4-43b8-8dce-ecc3cd42d776"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="4c18dc78-c3e9-4a0b-9f00-8c509c707fae"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="4bb740c4-f2a7-4a0b-b9f4-3841a9c08c67"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="581dc9ec-f2a4-4942-a884-a2a9f05d7c7b">
+      <expression>1858</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="ce7bccae-adec-4542-84d0-73744b7500e1"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="2819291c-13cb-4bc0-bebf-f2d2be78748e">
+      <expression>sqrt(Cov)/sqrt(Ts(1))</expression>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="b6cf69cc-8d32-4c75-a060-15acc1c7fe5c"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="87fecfbe-d6c7-4c4c-a67f-9c0471f2d7b0"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="329b8bf3-0e30-47f6-8129-254da09a39c6"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="3ec0f6d1-2416-4577-9771-e38a580199ca">
+      <expression>deltaT</expression>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="58d7e597-e18b-44d2-a2c3-cf266d8adfb2"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="5ef2f5ff-30e8-45e8-8310-b6f71624ca3a"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="de4ef97d-9c70-4af7-aad3-05998fff12e3">
+      <expression>1</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="48c2ec68-9909-44d3-ab93-ab800e9976eb"/>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="fc059ebd-37a4-4e8d-b177-154dddefa932"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="bf676fe8-3f46-44a3-96fc-1ea9d800467b">
+      <expression>year</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="1ebb23c6-69a9-4ae6-8718-4e15c40d4638"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="7e129954-2a26-42ba-b62b-1190bcb2b9ca"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="556a8a6b-0701-4950-a4be-8ed155da67d1">
+      <expression>11</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="07a24a08-d74b-473f-842f-905c953fced4"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="b61645ad-2726-44df-9319-1de65300c974">
+      <expression>0</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="8680bbde-56c1-48c0-9cbf-ff6b0e47bf31"/>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="60485ad5-9fb2-4c90-90b7-f5d76e797c17"/>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="72d8708e-b736-466d-ab07-5784780a9024"/>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="3444eeaf-ffb5-470e-a476-d04e6e93cc4f"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="3d22c8c1-cc3e-4af9-9b94-6e3c6ec187cf">
+      <expression>hour</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="c1a3119e-b6d5-4653-a612-f5c5e8472928"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="e3b58a0e-2af8-40ed-b353-2669dcfdaef7"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="8142b8f0-e311-48a5-b1d0-61ed19646bf0">
+      <expression>min</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="7485fd30-7f2e-43f6-b8b0-06b0179e57e7"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="d716e9bb-1d1b-4e57-9405-b43146e8896a"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="60ef06f8-d76f-486b-9159-04e954da440b">
+      <expression>initCond.r_eci</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="20e9b9d0-0349-42af-bec9-1a1f2fc75ef6"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="ce2aed97-4fa4-4cf5-ae9a-1756777e6a24"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="a01cc7f6-a798-4f39-af5c-3f4dab3d879f">
+      <expression>2</expression>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="8a8f1a64-a4a5-4a28-bee1-238f4fd1cfb8"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a">
+      <expression>load aeroCIP2006.mat
+aeroicon(&apos;aeroblkdcmeci2ecef&apos;,&apos;IAU2000sys&apos;)</expression>
+      <isAssignable>false</isAssignable>
+      <ownerBlockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction</ownerBlockPath>
+      <users type="slsa.mm.parametertuning.VariableDefinition" uuid="32746b75-695a-4dff-b586-86d642a39358"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="237e4323-f7ec-474c-a025-319b9e2fa183"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="7bdbdfbc-f8bc-4859-ae68-8d6f50fe0b1e"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="5b1c96a8-e68e-45fb-a985-1b420eff3540"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="4f51d4d4-81d6-4c46-ae76-8f610f1b2dd7"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="763ac37b-08d2-454c-8b3f-607ff608040a"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="c4b756a4-767a-4ade-9bab-0b184bd9f173"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="3573b473-f598-4c06-a69e-c464d2389244"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="62e4577a-e736-4b4d-9594-422bbc63dc50"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="d310b32f-07bf-4b15-9f46-f3325ad00146">
+      <expression>aeroCIP2006.S</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="bbf31cac-50fa-4f40-8eaa-61f2ad051ff0"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="ad225f97-e945-4565-989b-58ee73b6f58a"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="c715ea86-e605-413e-a715-c6c859d038dd">
+      <expression>aeroCIP2006.X</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="f332d2f2-f901-4337-bf8b-2a93058356be"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="8d1bd28a-1596-48e0-b2cf-7089f5b501d7"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="0cffccd4-ed72-4238-8a87-eaa3011340c8">
+      <expression>aeroCIP2006.Y</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="c79e95c4-a7a2-4bc2-b909-50c1fd96bc54"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="98535bf5-9a2c-425a-b054-1a162deda0db"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="5673daf1-392d-4449-b496-5c40ca990c7e">
+      <expression>deltaT</expression>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="91868100-ed39-4564-a496-a8c9282938d5"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="1b69fd7c-b62d-4915-b00c-962b4c1af064"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="b8a8e2aa-bed0-425e-889e-d01c972c795b">
+      <expression>Ts</expression>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="64cc0ff6-5fd9-43b7-aa40-5567db83a31f"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="87fecfbe-d6c7-4c4c-a67f-9c0471f2d7b0"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="70e3154f-6f8b-47b6-b13e-3b82c4819449">
+      <expression>initCond.simStartDate.JD</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="f38eb4c4-511f-4e21-ad3a-90070c6bdf85"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="7937c246-4f29-43a7-ae3f-fd93a79f75c7"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="2e9f1e17-884a-4da9-9538-630961c0f85a">
+      <expression>vehicle.mass</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="e38f4387-749f-4a56-bb29-3467038393c2"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="106cbd81-0ca5-4d2a-bf68-f13743891fc6"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="d915c28b-d0ac-4dfe-86e0-6ad3c7d43f6e"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="2d73aeaf-a3ac-4989-b0b0-cc9ace3be264">
+      <expression>initCond.v_eci</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="c7b1f038-ac3c-414c-ace3-06f00b374950"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="ba82de7d-fc7b-4a7f-8f11-289392e12935"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="2d6e52aa-3f98-4e68-9106-26d4570e4a2a">
+      <expression>vehicle.inertia</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="1a42f995-a660-4629-9618-4e9b3704f8a3"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="a6c11f55-c200-4e5b-a01d-257ac39960ea"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="d915c28b-d0ac-4dfe-86e0-6ad3c7d43f6e"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="841da921-e61a-4528-9df5-1505b5ffec6f">
+      <expression>initCond.euler</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="dbf2bf2d-0c63-43d8-a6ab-00c21a168fa6"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="8c1987d2-0cb1-4f76-8137-d2b5a29c4257"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </expressions>
+    <expressions type="slsa.mm.parametertuning.Expression" uuid="6aae4aff-d68d-45c5-8651-d97f971a15d3">
+      <expression>initCond.pqr</expression>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="4f00cf3f-c420-4196-986b-cf43ec7f69a0"/>
+      <users type="slsa.mm.parametertuning.BlockParameter" uuid="e6de6454-54f2-4ad6-8ad7-d47020db2ce0"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </expressions>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="e38f4387-749f-4a56-bb29-3467038393c2">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="2e9f1e17-884a-4da9-9538-630961c0f85a"/>
+      <fieldName>vehicle.mass</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="d915c28b-d0ac-4dfe-86e0-6ad3c7d43f6e"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="f332d2f2-f901-4337-bf8b-2a93058356be">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="c715ea86-e605-413e-a715-c6c859d038dd"/>
+      <fieldName>aeroCIP2006.X</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="f38eb4c4-511f-4e21-ad3a-90070c6bdf85">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="70e3154f-6f8b-47b6-b13e-3b82c4819449"/>
+      <fieldName>initCond.simStartDate.JD</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="bbf31cac-50fa-4f40-8eaa-61f2ad051ff0">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="d310b32f-07bf-4b15-9f46-f3325ad00146"/>
+      <fieldName>aeroCIP2006.S</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="c79e95c4-a7a2-4bc2-b909-50c1fd96bc54">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="0cffccd4-ed72-4238-8a87-eaa3011340c8"/>
+      <fieldName>aeroCIP2006.Y</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="c7b1f038-ac3c-414c-ace3-06f00b374950">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="2d73aeaf-a3ac-4989-b0b0-cc9ace3be264"/>
+      <fieldName>initCond.v_eci</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="1a42f995-a660-4629-9618-4e9b3704f8a3">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="2d6e52aa-3f98-4e68-9106-26d4570e4a2a"/>
+      <fieldName>vehicle.inertia</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="d915c28b-d0ac-4dfe-86e0-6ad3c7d43f6e"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="20e9b9d0-0349-42af-bec9-1a1f2fc75ef6">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="60ef06f8-d76f-486b-9159-04e954da440b"/>
+      <fieldName>initCond.r_eci</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="dbf2bf2d-0c63-43d8-a6ab-00c21a168fa6">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="841da921-e61a-4528-9df5-1505b5ffec6f"/>
+      <fieldName>initCond.euler</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </fieldReferences>
+    <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="4f00cf3f-c420-4196-986b-cf43ec7f69a0">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="6aae4aff-d68d-45c5-8651-d97f971a15d3"/>
+      <fieldName>initCond.pqr</fieldName>
+      <variable type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+    </fieldReferences>
+    <name>asbCubeSat</name>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="dbf73e1b-b3a9-40be-aec5-c62d2e02f538">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="329b8bf3-0e30-47f6-8129-254da09a39c6"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="ca45abe6-bd0c-472b-a6a0-d51986448454"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="8680bbde-56c1-48c0-9cbf-ff6b0e47bf31">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="e3b58a0e-2af8-40ed-b353-2669dcfdaef7"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="b61645ad-2726-44df-9319-1de65300c974"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="1ebb23c6-69a9-4ae6-8718-4e15c40d4638">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="237e4323-f7ec-474c-a025-319b9e2fa183"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="bf676fe8-3f46-44a3-96fc-1ea9d800467b"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="ce7bccae-adec-4542-84d0-73744b7500e1">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="7e129954-2a26-42ba-b62b-1190bcb2b9ca"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="581dc9ec-f2a4-4942-a884-a2a9f05d7c7b"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="563e9b42-40c4-43b8-8dce-ecc3cd42d776">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="87fecfbe-d6c7-4c4c-a67f-9c0471f2d7b0"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="7b9eead7-ce58-4194-acfe-c308f6f9623d"/>
+      <isTunable>false</isTunable>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="60485ad5-9fb2-4c90-90b7-f5d76e797c17">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="d716e9bb-1d1b-4e57-9405-b43146e8896a"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="b61645ad-2726-44df-9319-1de65300c974"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="a0c4d463-a3ac-42a7-b9b8-6281c935d41f">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="62e4577a-e736-4b4d-9594-422bbc63dc50"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="0a96be60-9990-4059-b5b3-78bee9a5e2d5"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="48c2ec68-9909-44d3-ab93-ab800e9976eb">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="5ef2f5ff-30e8-45e8-8310-b6f71624ca3a"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="de4ef97d-9c70-4af7-aad3-05998fff12e3"/>
+      <isTunable>false</isTunable>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="07a24a08-d74b-473f-842f-905c953fced4">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="3573b473-f598-4c06-a69e-c464d2389244"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="556a8a6b-0701-4950-a4be-8ed155da67d1"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="c1a3119e-b6d5-4653-a612-f5c5e8472928">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="763ac37b-08d2-454c-8b3f-607ff608040a"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="3d22c8c1-cc3e-4af9-9b94-6e3c6ec187cf"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="3444eeaf-ffb5-470e-a476-d04e6e93cc4f">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="7bdbdfbc-f8bc-4859-ae68-8d6f50fe0b1e"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="b61645ad-2726-44df-9319-1de65300c974"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="7485fd30-7f2e-43f6-b8b0-06b0179e57e7">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="4f51d4d4-81d6-4c46-ae76-8f610f1b2dd7"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="8142b8f0-e311-48a5-b1d0-61ed19646bf0"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="8a8f1a64-a4a5-4a28-bee1-238f4fd1cfb8">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="5b1c96a8-e68e-45fb-a985-1b420eff3540"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="a01cc7f6-a798-4f39-af5c-3f4dab3d879f"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="32746b75-695a-4dff-b586-86d642a39358">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="72d8708e-b736-466d-ab07-5784780a9024">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="c4b756a4-767a-4ade-9bab-0b184bd9f173"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="b61645ad-2726-44df-9319-1de65300c974"/>
+    </variableDefinitions>
+    <variableDefinitions type="slsa.mm.parametertuning.VariableDefinition" uuid="fc059ebd-37a4-4e8d-b177-154dddefa932">
+      <variable type="slsa.mm.parametertuning.Variable" uuid="1b69fd7c-b62d-4915-b00c-962b4c1af064"/>
+      <expression type="slsa.mm.parametertuning.Expression" uuid="de4ef97d-9c70-4af7-aad3-05998fff12e3"/>
+      <isTunable>false</isTunable>
+    </variableDefinitions>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="62e4577a-e736-4b4d-9594-422bbc63dc50">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="a0c4d463-a3ac-42a7-b9b8-6281c935d41f"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+      <name>day</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="329b8bf3-0e30-47f6-8129-254da09a39c6">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="dbf73e1b-b3a9-40be-aec5-c62d2e02f538"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="2819291c-13cb-4bc0-bebf-f2d2be78748e"/>
+      <name>Cov</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="a1d7a378-ad6d-42ac-95a0-9df6ec70ad58"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="e3b58a0e-2af8-40ed-b353-2669dcfdaef7">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="8680bbde-56c1-48c0-9cbf-ff6b0e47bf31"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="3d22c8c1-cc3e-4af9-9b94-6e3c6ec187cf"/>
+      <name>hour</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="ce9ad29a-9130-4cb4-878c-f7f15c9f57d6"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="237e4323-f7ec-474c-a025-319b9e2fa183">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="1ebb23c6-69a9-4ae6-8718-4e15c40d4638"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+      <name>year</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="4bb740c4-f2a7-4a0b-b9f4-3841a9c08c67">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="7b9eead7-ce58-4194-acfe-c308f6f9623d"/>
+      <name>CubeSatTimeStep</name>
+      <provenance>DataDictionary</provenance>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="af4ed47e-801f-4f47-90af-6b13e5dfc2e4"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="87fecfbe-d6c7-4c4c-a67f-9c0471f2d7b0">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="563e9b42-40c4-43b8-8dce-ecc3cd42d776"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="b8a8e2aa-bed0-425e-889e-d01c972c795b"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="2819291c-13cb-4bc0-bebf-f2d2be78748e"/>
+      <name>Ts</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="a1d7a378-ad6d-42ac-95a0-9df6ec70ad58"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="7e129954-2a26-42ba-b62b-1190bcb2b9ca">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="ce7bccae-adec-4542-84d0-73744b7500e1"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="bf676fe8-3f46-44a3-96fc-1ea9d800467b"/>
+      <name>year</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="ce9ad29a-9130-4cb4-878c-f7f15c9f57d6"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="5ef2f5ff-30e8-45e8-8310-b6f71624ca3a">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="48c2ec68-9909-44d3-ab93-ab800e9976eb"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="3ec0f6d1-2416-4577-9771-e38a580199ca"/>
+      <name>deltaT</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="0999e8a2-75de-40cb-bf0b-2f46b055904b"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="3573b473-f598-4c06-a69e-c464d2389244">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="07a24a08-d74b-473f-842f-905c953fced4"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+      <name>month</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="763ac37b-08d2-454c-8b3f-607ff608040a">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="c1a3119e-b6d5-4653-a612-f5c5e8472928"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+      <name>hour</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="d716e9bb-1d1b-4e57-9405-b43146e8896a">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="60485ad5-9fb2-4c90-90b7-f5d76e797c17"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="8142b8f0-e311-48a5-b1d0-61ed19646bf0"/>
+      <name>min</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="ce9ad29a-9130-4cb4-878c-f7f15c9f57d6"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="4f51d4d4-81d6-4c46-ae76-8f610f1b2dd7">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="7485fd30-7f2e-43f6-b8b0-06b0179e57e7"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+      <name>min</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="1b69fd7c-b62d-4915-b00c-962b4c1af064">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="fc059ebd-37a4-4e8d-b177-154dddefa932"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="5673daf1-392d-4449-b496-5c40ca990c7e"/>
+      <name>deltaT</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="187735d2-9f60-4fd8-ad6d-8c8a9676f444"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="5b1c96a8-e68e-45fb-a985-1b420eff3540">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="8a8f1a64-a4a5-4a28-bee1-238f4fd1cfb8"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+      <name>deltaT</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="c4b756a4-767a-4ade-9bab-0b184bd9f173">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="72d8708e-b736-466d-ab07-5784780a9024"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+      <name>Sdata</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="7bdbdfbc-f8bc-4859-ae68-8d6f50fe0b1e">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="3444eeaf-ffb5-470e-a476-d04e6e93cc4f"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="404a0a16-c514-4277-9333-d97fd6ceda6a"/>
+      <name>XYdata</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04">
+      <definition type="slsa.mm.parametertuning.VariableDefinition" uuid="32746b75-695a-4dff-b586-86d642a39358"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="0cffccd4-ed72-4238-8a87-eaa3011340c8"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="c715ea86-e605-413e-a715-c6c859d038dd"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="d310b32f-07bf-4b15-9f46-f3325ad00146"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="f332d2f2-f901-4337-bf8b-2a93058356be"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="bbf31cac-50fa-4f40-8eaa-61f2ad051ff0"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="c79e95c4-a7a2-4bc2-b909-50c1fd96bc54"/>
+      <name>aeroCIP2006</name>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="6aae4aff-d68d-45c5-8651-d97f971a15d3"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="841da921-e61a-4528-9df5-1505b5ffec6f"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="2d73aeaf-a3ac-4989-b0b0-cc9ace3be264"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="60ef06f8-d76f-486b-9159-04e954da440b"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="70e3154f-6f8b-47b6-b13e-3b82c4819449"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="dbf2bf2d-0c63-43d8-a6ab-00c21a168fa6"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="f38eb4c4-511f-4e21-ad3a-90070c6bdf85"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="20e9b9d0-0349-42af-bec9-1a1f2fc75ef6"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="4f00cf3f-c420-4196-986b-cf43ec7f69a0"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="c7b1f038-ac3c-414c-ace3-06f00b374950"/>
+      <name>initCond</name>
+      <provenance>DataDictionary</provenance>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="af4ed47e-801f-4f47-90af-6b13e5dfc2e4"/>
+    </variables>
+    <variables type="slsa.mm.parametertuning.Variable" uuid="d915c28b-d0ac-4dfe-86e0-6ad3c7d43f6e">
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="2d6e52aa-3f98-4e68-9106-26d4570e4a2a"/>
+      <expressions type="slsa.mm.parametertuning.Expression" uuid="2e9f1e17-884a-4da9-9538-630961c0f85a"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="e38f4387-749f-4a56-bb29-3467038393c2"/>
+      <fieldReferences type="slsa.mm.parametertuning.FieldReference" uuid="1a42f995-a660-4629-9618-4e9b3704f8a3"/>
+      <name>vehicle</name>
+      <provenance>DataDictionary</provenance>
+      <workspace type="slsa.mm.parametertuning.Workspace" uuid="af4ed47e-801f-4f47-90af-6b13e5dfc2e4"/>
+    </variables>
+    <workspaces type="slsa.mm.parametertuning.Workspace" uuid="0999e8a2-75de-40cb-bf0b-2f46b055904b">
+      <name>asbCubeSat:675:282:1825:907</name>
+      <type>MASK</type>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="5ef2f5ff-30e8-45e8-8310-b6f71624ca3a"/>
+    </workspaces>
+    <workspaces type="slsa.mm.parametertuning.Workspace" uuid="a1d7a378-ad6d-42ac-95a0-9df6ec70ad58">
+      <name>asbCubeSat:1381</name>
+      <type>MASK</type>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="329b8bf3-0e30-47f6-8129-254da09a39c6"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="87fecfbe-d6c7-4c4c-a67f-9c0471f2d7b0"/>
+    </workspaces>
+    <workspaces type="slsa.mm.parametertuning.Workspace" uuid="af4ed47e-801f-4f47-90af-6b13e5dfc2e4">
+      <name>global-workspace</name>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="ab654b80-e101-419a-a29c-a68f43c86004"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="4bb740c4-f2a7-4a0b-b9f4-3841a9c08c67"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="d915c28b-d0ac-4dfe-86e0-6ad3c7d43f6e"/>
+    </workspaces>
+    <workspaces type="slsa.mm.parametertuning.Workspace" uuid="ce9ad29a-9130-4cb4-878c-f7f15c9f57d6">
+      <name>asbCubeSat:675:282:1825</name>
+      <type>MASK</type>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="7e129954-2a26-42ba-b62b-1190bcb2b9ca"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="e3b58a0e-2af8-40ed-b353-2669dcfdaef7"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="d716e9bb-1d1b-4e57-9405-b43146e8896a"/>
+    </workspaces>
+    <workspaces type="slsa.mm.parametertuning.Workspace" uuid="6a286841-5fed-4e42-b35f-3d29ca7687ab">
+      <name>asbCubeSat:675:282:1825:1050</name>
+      <type>MASK</type>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="7bdbdfbc-f8bc-4859-ae68-8d6f50fe0b1e"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="5b1c96a8-e68e-45fb-a985-1b420eff3540"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="237e4323-f7ec-474c-a025-319b9e2fa183"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="3573b473-f598-4c06-a69e-c464d2389244"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="62e4577a-e736-4b4d-9594-422bbc63dc50"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="763ac37b-08d2-454c-8b3f-607ff608040a"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="4f51d4d4-81d6-4c46-ae76-8f610f1b2dd7"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="c4b756a4-767a-4ade-9bab-0b184bd9f173"/>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="38295028-a7ca-41cf-9795-4d11023b8f04"/>
+    </workspaces>
+    <workspaces type="slsa.mm.parametertuning.Workspace" uuid="187735d2-9f60-4fd8-ad6d-8c8a9676f444">
+      <name>asbCubeSat:675:282:1825:1050:619</name>
+      <type>MASK</type>
+      <variables type="slsa.mm.parametertuning.Variable" uuid="1b69fd7c-b62d-4915-b00c-962b4c1af064"/>
+    </workspaces>
+  </slsa.mm.parametertuning.VariableRegistry>
+</MF0>

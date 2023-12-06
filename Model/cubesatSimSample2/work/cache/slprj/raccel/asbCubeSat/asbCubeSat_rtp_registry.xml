@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MF0 version="1.1" packageUris="http://schema.mathworks.com/mf0/slsa_mm_rtp_registry/R2023a">
+  <slsa.mm.rtpregistry.StructParameter type="slsa.mm.rtpregistry.StructParameter" uuid="6f0e4886-b6a5-41fd-bb38-fa00b0c27b6e">
+    <id type="slsa.mm.rtpregistry.VariableId" uuid="fc982541-bdaf-4037-b524-cb946223c898"/>
+    <rtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="091718d7-6dd6-46ab-b86f-c31d84a5cc76"/>
+  </slsa.mm.rtpregistry.StructParameter>
+  <slsa.mm.rtpregistry.ModelMetadata type="slsa.mm.rtpregistry.ModelMetadata" uuid="2fd01854-03c2-4352-a011-96be8ebb54d2">
+    <modelName>asbCubeSat</modelName>
+  </slsa.mm.rtpregistry.ModelMetadata>
+  <slsa.mm.rtpregistry.Parameter type="slsa.mm.rtpregistry.Parameter" uuid="b50f0bde-3e51-49cd-b468-7f2516756159">
+    <id type="slsa.mm.rtpregistry.BlockParameterId" uuid="9db112b0-84c5-4e62-8a31-6c3797d7349d"/>
+    <rtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="d1581030-63f8-4e14-a36d-332f55f8240c"/>
+  </slsa.mm.rtpregistry.Parameter>
+  <slsa.mm.rtpregistry.RtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="3dacaa9f-b10f-4e65-a71d-27e67d8bfb02">
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="b8812bae-3106-40e6-93b0-6560e31fe25a"/>
+    <segmentIndex>2</segmentIndex>
+    <valueIndices>398</valueIndices>
+    <valueIndices>398</valueIndices>
+  </slsa.mm.rtpregistry.RtpLocation>
+  <slsa.mm.rtpregistry.Parameter type="slsa.mm.rtpregistry.Parameter" uuid="8d2a04e8-0b3e-4328-a08d-1dd723599d04">
+    <id type="slsa.mm.rtpregistry.BlockParameterId" uuid="9e28e3e1-c090-48a3-b14e-4f60e18c4cbc"/>
+    <rtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="3c160f76-13d7-474f-a6e1-535a7a35f440"/>
+  </slsa.mm.rtpregistry.Parameter>
+  <slsa.mm.rtpregistry.BlockParameterId type="slsa.mm.rtpregistry.BlockParameterId" uuid="9e28e3e1-c090-48a3-b14e-4f60e18c4cbc">
+    <blockPath>asbCubeSat/Vehicle Model/Vehicle Control Sensors/Band-Limited White Noise/Output</blockPath>
+    <name>Gain</name>
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="8d2a04e8-0b3e-4328-a08d-1dd723599d04"/>
+  </slsa.mm.rtpregistry.BlockParameterId>
+  <slsa.mm.rtpregistry.VariableId type="slsa.mm.rtpregistry.VariableId" uuid="fc982541-bdaf-4037-b524-cb946223c898">
+    <workspaceName>global-workspace</workspaceName>
+    <name>initCond</name>
+    <parameter type="slsa.mm.rtpregistry.StructParameter" uuid="6f0e4886-b6a5-41fd-bb38-fa00b0c27b6e"/>
+  </slsa.mm.rtpregistry.VariableId>
+  <slsa.mm.rtpregistry.RtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="3c160f76-13d7-474f-a6e1-535a7a35f440">
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="8d2a04e8-0b3e-4328-a08d-1dd723599d04"/>
+    <segmentIndex>2</segmentIndex>
+    <valueIndices>227</valueIndices>
+    <valueIndices>229</valueIndices>
+  </slsa.mm.rtpregistry.RtpLocation>
+  <slsa.mm.rtpregistry.BlockParameterId type="slsa.mm.rtpregistry.BlockParameterId" uuid="28577c85-3624-42d7-85d1-a83c9b0eb18a">
+    <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/Common Time  Calculation/Julian Date Conversion/Index</blockPath>
+    <name>Value</name>
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="b8812bae-3106-40e6-93b0-6560e31fe25a"/>
+  </slsa.mm.rtpregistry.BlockParameterId>
+  <slsa.mm.rtpregistry.Parameter type="slsa.mm.rtpregistry.Parameter" uuid="b8812bae-3106-40e6-93b0-6560e31fe25a">
+    <id type="slsa.mm.rtpregistry.BlockParameterId" uuid="28577c85-3624-42d7-85d1-a83c9b0eb18a"/>
+    <rtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="3dacaa9f-b10f-4e65-a71d-27e67d8bfb02"/>
+  </slsa.mm.rtpregistry.Parameter>
+  <slsa.mm.rtpregistry.BlockParameterId type="slsa.mm.rtpregistry.BlockParameterId" uuid="9db112b0-84c5-4e62-8a31-6c3797d7349d">
+    <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction/Celestial motion of the CIP/P03 Precession/S/Constant</blockPath>
+    <name>Value</name>
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="b50f0bde-3e51-49cd-b468-7f2516756159"/>
+  </slsa.mm.rtpregistry.BlockParameterId>
+  <slsa.mm.rtpregistry.RtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="d1581030-63f8-4e14-a36d-332f55f8240c">
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="b50f0bde-3e51-49cd-b468-7f2516756159"/>
+    <segmentIndex>2</segmentIndex>
+    <valueIndices>406</valueIndices>
+    <valueIndices>1131</valueIndices>
+  </slsa.mm.rtpregistry.RtpLocation>
+  <slsa.mm.rtpregistry.RtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="120e1b63-26f7-41a8-b886-03de84ee4dcb">
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="12c82a51-f48a-4ad9-bd88-ae8494fcc16a"/>
+    <segmentIndex>2</segmentIndex>
+    <valueIndices>1197</valueIndices>
+    <valueIndices>28396</valueIndices>
+  </slsa.mm.rtpregistry.RtpLocation>
+  <slsa.mm.rtpregistry.Parameter type="slsa.mm.rtpregistry.Parameter" uuid="12c82a51-f48a-4ad9-bd88-ae8494fcc16a">
+    <id type="slsa.mm.rtpregistry.BlockParameterId" uuid="e666554f-754f-4cee-af93-f439f9daba91"/>
+    <rtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="120e1b63-26f7-41a8-b886-03de84ee4dcb"/>
+  </slsa.mm.rtpregistry.Parameter>
+  <slsa.mm.rtpregistry.BlockParameterId type="slsa.mm.rtpregistry.BlockParameterId" uuid="e666554f-754f-4cee-af93-f439f9daba91">
+    <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction/Celestial motion of the CIP/P03 Precession/X/Constant</blockPath>
+    <name>Value</name>
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="12c82a51-f48a-4ad9-bd88-ae8494fcc16a"/>
+  </slsa.mm.rtpregistry.BlockParameterId>
+  <slsa.mm.rtpregistry.Parameter type="slsa.mm.rtpregistry.Parameter" uuid="ccb6be5e-3172-4d8c-810d-1f30b054f612">
+    <id type="slsa.mm.rtpregistry.BlockParameterId" uuid="88e30c56-f99f-4a8a-a30e-37b129a67912"/>
+    <rtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="7f5f2af7-fe70-4665-9323-55679a9ee0c2"/>
+  </slsa.mm.rtpregistry.Parameter>
+  <slsa.mm.rtpregistry.BlockParameterId type="slsa.mm.rtpregistry.BlockParameterId" uuid="88e30c56-f99f-4a8a-a30e-37b129a67912">
+    <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction/Celestial motion of the CIP/P03 Precession/Y/Constant</blockPath>
+    <name>Value</name>
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="ccb6be5e-3172-4d8c-810d-1f30b054f612"/>
+  </slsa.mm.rtpregistry.BlockParameterId>
+  <slsa.mm.rtpregistry.RtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="7f5f2af7-fe70-4665-9323-55679a9ee0c2">
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="ccb6be5e-3172-4d8c-810d-1f30b054f612"/>
+    <segmentIndex>2</segmentIndex>
+    <valueIndices>29996</valueIndices>
+    <valueIndices>51670</valueIndices>
+  </slsa.mm.rtpregistry.RtpLocation>
+  <slsa.mm.rtpregistry.Parameter type="slsa.mm.rtpregistry.Parameter" uuid="22455a5d-0c33-4b45-9840-071c0d389acd">
+    <id type="slsa.mm.rtpregistry.BlockParameterId" uuid="40fa3170-63ec-47bd-b90c-33349e4e2dea"/>
+    <rtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="a073aac2-d06d-4bc0-ad94-fa0d231e98b2"/>
+  </slsa.mm.rtpregistry.Parameter>
+  <slsa.mm.rtpregistry.BlockParameterId type="slsa.mm.rtpregistry.BlockParameterId" uuid="40fa3170-63ec-47bd-b90c-33349e4e2dea">
+    <blockPath>asbCubeSat/Vehicle Model/Vehicle Dynamics/Convert ITRF Position and Velocity to ICRF/R_woPM/IAUReduction/Additional Time Calculations/Julian Date Conversion/Index</blockPath>
+    <name>Value</name>
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="22455a5d-0c33-4b45-9840-071c0d389acd"/>
+  </slsa.mm.rtpregistry.BlockParameterId>
+  <slsa.mm.rtpregistry.RtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="a073aac2-d06d-4bc0-ad94-fa0d231e98b2">
+    <parameter type="slsa.mm.rtpregistry.Parameter" uuid="22455a5d-0c33-4b45-9840-071c0d389acd"/>
+    <segmentIndex>2</segmentIndex>
+    <valueIndices>52947</valueIndices>
+    <valueIndices>52947</valueIndices>
+  </slsa.mm.rtpregistry.RtpLocation>
+  <slsa.mm.rtpregistry.RtpLocation type="slsa.mm.rtpregistry.RtpLocation" uuid="091718d7-6dd6-46ab-b86f-c31d84a5cc76">
+    <parameter type="slsa.mm.rtpregistry.StructParameter" uuid="6f0e4886-b6a5-41fd-bb38-fa00b0c27b6e"/>
+    <segmentIndex>7</segmentIndex>
+    <valueIndices>0</valueIndices>
+    <valueIndices>0</valueIndices>
+  </slsa.mm.rtpregistry.RtpLocation>
+</MF0>
