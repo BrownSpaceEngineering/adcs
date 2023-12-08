@@ -1,0 +1,105 @@
+%implements "chartSource" "C"
+%function ChartConfig(block, system) void
+  %createrecord chartConfiguration { ...
+          executeAtInitialization  0 ...
+  }
+  %return chartConfiguration
+%endfunction
+%function ChartDataMap(block, system) void
+  %createrecord ChartDataElements {\
+    NumChartData   12 \
+    ChartDataDefaults {\
+      RecordType   "ChartData"\
+      Dimensions   []\
+      IsTestPoint  0\
+    }\
+    ChartData {\
+      Name         "sf_internal_action_state_placeholder_data"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "On.B_Dot.sf_internal_action_state_placeholder_data"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "sf_internal_action_state_placeholder_data"\
+      Description  "ChartLocal"\
+      SFName       ""\
+      Path         "Off.sf_internal_action_state_placeholder_data"\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "sfEvent"\
+      Description  "ActiveChartEvent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "stateChanged"\
+      Description  "StateChanged"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "lastMajorTime"\
+      Description  "LastMajorTime"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "is_active_c1_asbCubeSat"\
+      Description  "StateIsActive"\
+      SFName       "is_active_c1_asbCubeSat"\
+      Path         "is_active_c1_asbCubeSat"\
+      SrcLocation  ""\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_c1_asbCubeSat"\
+      Description  "StateActiveChild"\
+      SFName       "is_c1_asbCubeSat"\
+      Path         "is_c1_asbCubeSat"\
+      SrcLocation  ""\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "is_On"\
+      Description  "StateActiveChild"\
+      SFName       "is_On"\
+      Path         "On.is_On"\
+      SrcLocation  ""\
+      IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "B_Dot_execBlock"\
+      Description  "Unknown"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "B_Dot_entered"\
+      Description  "Unknown"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "Off_execBlock"\
+      Description  "Unknown"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+    ChartData {\
+      Name         "Off_entered"\
+      Description  "Unknown"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  ""\
+    }\
+  }
+  %return ChartDataElements
+%endfunction

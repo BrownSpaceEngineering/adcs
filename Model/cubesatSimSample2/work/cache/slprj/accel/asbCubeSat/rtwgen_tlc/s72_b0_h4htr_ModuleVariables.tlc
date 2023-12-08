@@ -1,4 +1,4 @@
-%implements s19_b0_63epr_ModuleVariables "C"
+%implements s72_b0_h4htr_ModuleVariables "C"
 
 %function ModuleVariables(block) Output
 

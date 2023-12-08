@@ -5,7 +5,6 @@
 #include "multiword_types.h"
 #include "simstruc.h"
 #include "fixedpoint.h"
-#include "asbCubeSatACS.h"
 #include "asbCubeSatACS_types.h"
 #include "simtarget/slMdlrefSimTargetCoreHeaders.h"
 #include "simtarget/slMdlrefSimTargetInstrumentationHeaders.h"
@@ -70,14 +69,8 @@ void * gblLoggingInterval ;
 #ifndef rtmGetClockTick0
 #define rtmGetClockTick0(rtm) ssGetClockTick( _ssGetRootSS((rtm)->_mdlRefSfcnS), (rtm)->Timing.mdlref_GlobalTID[0])
 #endif
-#ifndef rtmGetClockTick1
-#define rtmGetClockTick1(rtm) ssGetClockTick( _ssGetRootSS((rtm)->_mdlRefSfcnS), (rtm)->Timing.mdlref_GlobalTID[1])
-#endif
 #ifndef rtmGetClockTickH0
 #define rtmGetClockTickH0(rtm) ssGetClockTickH( _ssGetRootSS((rtm)->_mdlRefSfcnS), (rtm)->Timing.mdlref_GlobalTID[0])
-#endif
-#ifndef rtmGetClockTickH1
-#define rtmGetClockTickH1(rtm) ssGetClockTickH( _ssGetRootSS((rtm)->_mdlRefSfcnS), (rtm)->Timing.mdlref_GlobalTID[1])
 #endif
 #ifndef rtmGetLogOutput
 #define rtmGetLogOutput(rtm) ssGetLogOutput((rtm)->_mdlRefSfcnS)
@@ -115,5 +108,5 @@ void * gblLoggingInterval ;
 #ifndef rtmSetVarNextHitTime
 #define rtmSetVarNextHitTime(rtm, sti, val) ssSetTimeOfNextVarHit((rtm)->_mdlRefSfcnS,  (rtm)->Timing.mdlref_GlobalTID[sti], val)
 #endif
-extern abopqckbgqo abopqckbgq ;
+extern int_T j5rpw4mhdf [ 1 ] ;
 #endif
