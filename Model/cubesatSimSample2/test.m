@@ -1,13 +1,12 @@
-xNorth = 1.27e-5;
-yEast = -3.99e-5;
-zDown = -1.48e-5;
-spheroid = referenceSphere('earth');
-lat0 = 33.8;
-lon0 = -43.1;
-h0 = 6778000;
-[X,Y,Z] = ned2ecef(xNorth,yEast,zDown,lat0,lon0,h0,spheroid)
-time = datetime('today');
-time2 = datetime('tomorrow');
-eci1 = ecef2eci(time, [X,Y,Z])
-eci2 = ecef2eci(time2, [X,Y,Z]);
-out = eci2-eci1
+% Define the function
+fun = @(x) x(1)^2 + x(2)^2 + x(3)^2 - x(1)*x(3) + x(2)*x(3);
+
+% Initial guess
+x0 = [0,0,0];
+
+% Call the optimization function
+[x,fval] = fminsearch(fun,x0);
+
+% Display the result
+disp('The minimum value is:'), disp(fval)
+disp('The values of x, y, and z are:'), disp(x)
