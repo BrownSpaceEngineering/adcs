@@ -1,3 +1,7 @@
 # macOS
 ._*
 .DS_Store
+
+# MATLAB cache
+Matlab\ Control\ System/cubesatSimSample2/CubesatModel/asbCubeSat.slx.autosave
+Matlab\ Control\ System/cubesatSimSample2/work/cache
