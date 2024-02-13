@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import matplotlib.cm as cmx
+from matplotlib.ticker import MaxNLocator
 from math import sin, cos
 from abc import ABC, abstractmethod
 from colorama import Fore
@@ -298,6 +301,73 @@ class DisturbanceModel:
 
         return out
 
+class MagnetorquerDesigner:
+    def __init__(self, max_total_radius, current, temp, total_length) -> None:
+        self.max_total_radius = max_total_radius
+        self.current = current 
+        self.temp = temp
+        self.total_length = total_length
+
+        self.core_radii = np.linspace(0.001, 0.01) # 1mm to 10mm 
+        self.layers = np.arange(1, 21) # 20 is the most possible layers before max_total_radius is exceeded
+        self.data = []
+        self.optimal_points = []
+
+        for i, core_radius in enumerate(self.core_radii): 
+            for j, layer_val in enumerate(self.layers):
+                radius = self.wire_height(layer_val) + core_radius
+                if radius < self.max_total_radius:
+                    new_torquer = CoreMagnetorquer(self.current, core_radius, self.total_length, layer_val, self.temp)
+
+                    dipole_moment = new_torquer.dipole_moment() 
+                    resistance = new_torquer.wire_resistance(self.temp)
+
+                    if resistance <= 33: 
+                        point = (radius, core_radius, layer_val, resistance, dipole_moment)
+                        
+                        if dipole_moment > 0.2:
+                            self.optimal_points.append(point)
+                    
+                        self.data.append(point)
+
+
+    def wire_height(self, layers):
+       return Constants.WIRE_DIAMETER * ( 1 + np.sqrt(3) * (layers - 1))
+
+    def plot(self):      
+        fig = plt.figure()
+        data = np.array(self.data)
+        optimals = np.array(self.optimal_points)
+
+        ax1 = fig.add_subplot(1, 2, 1, projection='3d')
+        ax1.set_title('All Points')
+        ax1.set_xlabel('Core Radius (m)')
+        ax1.set_ylabel('Layers')
+        ax1.set_zlabel(r'Dipole Moment ($Am^2$)')
+        im1 = ax1.scatter(data[:,1], data[:,2], data[:,4], c=data[:,3])
+
+        ax2 = fig.add_subplot(1, 2, 2, projection='3d')
+        ax2.set_title(r'Points with dipole moment >0.2 $Am^2$')
+        ax2.set_xlabel('Core Radius (m)')
+        ax2.set_ylabel('Layers')
+        ax2.set_zlabel(r'Dipole Moment ($Am^2$)')
+        im2 = ax2.scatter(optimals[:,1], optimals[:,2], optimals[:,4], c=optimals[:,3])
+
+        fig.colorbar(im2, label=r'Resistance ($\Omega$)', ax=[ax1, ax2], fraction=0.03, pad=0.2)
+        
+        plt.show()
+
+    def present_optimal_points(self):
+        print(f"POTENTIAL OPTIMAL POINTS:\n")
+
+        optimal_points = sorted(self.optimal_points, key=lambda x: x[4], reverse=True)
+        if len(optimal_points) > 5:
+            optimal_points = optimal_points[:5]
+            
+        for point in optimal_points:
+            point = list(map(lambda x: round(x, 5), point))
+            print(f"Total Radius: {point[0]} m, Core Radius: {point[1]} m, Layers: {point[2]}, Resistance: {point[3]} Ohms, Dipole Moment: {point[4]} A*m^2")
+
 def rigid_body_torque(mass, angle, diameter, time):
     '''
     param mass: mass of satellite in kg
@@ -329,8 +399,6 @@ def alt_rigid_body_torque(angle_to_move, initial_angular_velocity, time):
     tau = Constants.INERTIA_Z * alpha
     return tau
 
-
-
 def calculate_bfield(r, m):
     '''
     param r: position vector of observation
@@ -339,73 +407,91 @@ def calculate_bfield(r, m):
     '''
     return Constants.MU_0 / (4 * np.pi) * ( (3 * r * np.dot(m,r)) / np.linalg.norm(r)**5 - m / np.linalg.norm(r)**3 )
 
+def model_design():
+    ######################################
+    ##             INPUTS               ##
+    ###################################### 
+    
+    max_total_radius = 0.01    # 10mm 
+    current          = 0.1     # Amps - 0.1A max through 30 AWG wire
+    temp             = 80      # Celsius (max resistance point)
+    total_length     = 0.045   # 45mm
+    
+    designer = MagnetorquerDesigner(max_total_radius, current, temp, total_length) 
+
+    designer.plot()
+    designer.present_optimal_points()
+
+def model_validation():
+    ######################################
+    ##             INPUTS               ##
+    ######################################
+
+    current = 0.1                       # Amps - 0.1A max through 30 AWG wire
+    temp = 20                            # Celsius
+
+    m1_radius = 0.005
+    m1_length = 0.045
+    m1_layers = 6
+
+    m2_radius = 0.005
+    m2_length = 0.06
+    m2_layers = 8
+
+    m_3_side_length = 0.045
+    m_3_length = 0.025
+    m_3_layers = 5
+
+    ######################################
 
 
-######################################
-##             INPUTS               ##
-######################################
+    m1 = CoreMagnetorquer(current, m1_radius, m1_length, m1_layers, temp)
+    m2 = CoreMagnetorquer(current, m2_radius, m2_length, m2_layers, temp)
+    am = AirMagnetorquer(current, m_3_side_length, m_3_length, m_3_layers, temp)
 
-current = 0.075                       # Amps - 0.1A max through 30 AWG wire
-temp = 20                            # Celsius
+    print(m1.wire_length())
+    print(m2.wire_length())
+    print(am)
 
-m1_radius = 0.005
-m1_length = 0.045
-m1_layers = 6
+    sim = SingleAxisDipoleModel(am, 0.01, 1)
+    # sim.plot()
+    print(sim) 
 
-m2_radius = 0.005
-m2_length = 0.06
-m2_layers = 8
+    print(f"MAX POSSIBLE POWER USAGE (Max voltage method):     {(m1.max_voltage + m2.max_voltage + am.max_voltage) * current} W")
+    print(f"MAX POSSIBLE POWER USAGE (9.9 * Current Method):   {9.9 * current} W\n")
 
-m_3_side_length = 0.045
-m_3_length = 0.025
-m_3_layers = 5
+    disturbances = DisturbanceModel(Constants.ALTITUDE)
+    print(disturbances)
 
-######################################
-
-m1 = CoreMagnetorquer(current, m1_radius, m1_length, m1_layers, temp)
-m2 = CoreMagnetorquer(current, m2_radius, m2_length, m2_layers, temp)
-am = AirMagnetorquer(current, m_3_side_length, m_3_length, m_3_layers, temp)
-
-print(m1.wire_length())
-print(m2.wire_length())
-print(am)
-
-sim = SingleAxisDipoleModel(am, 0.01, 1)
-# sim.plot()
-print(sim) 
-
-print(f"MAX POSSIBLE POWER USAGE (Max voltage method):     {(m1.max_voltage + m2.max_voltage + am.max_voltage) * current} W")
-print(f"MAX POSSIBLE POWER USAGE (9.9 * Current Method):   {9.9 * current} W\n")
-
-disturbances = DisturbanceModel(Constants.ALTITUDE)
-print(disturbances)
-
-print(f"MINIMUM TORQUE GENERATED:                          {m1.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR} Nm")
-print(f"MINIMUM TORQUE GENERATED:                          {am.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR} Nm")
-print(f"RIGID BODY PREDICTED TORQUE REQUIREMENT:           {rigid_body_torque(Constants.SATELLITE_MASS, sim.theta[0], Constants.SATELLITE_LENGTH, sim.convergence_time)} Nm\n")
-print(f"ALT RIGID BODY PREDICTED TORQUE REQUIREMENT:       {alt_rigid_body_torque(np.pi,0,Constants.SECONDS_PER_ORBIT)} Nm\n")
+    print(f"MINIMUM TORQUE GENERATED:                          {m1.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR} Nm")
+    print(f"MINIMUM TORQUE GENERATED:                          {am.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR} Nm")
+    print(f"RIGID BODY PREDICTED TORQUE REQUIREMENT:           {rigid_body_torque(Constants.SATELLITE_MASS, sim.theta[0], Constants.SATELLITE_LENGTH, sim.convergence_time)} Nm\n")
+    print(f"ALT RIGID BODY PREDICTED TORQUE REQUIREMENT:       {alt_rigid_body_torque(np.pi,0,Constants.SECONDS_PER_ORBIT)} Nm\n")
 
 
-if (m1.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR) < disturbances.total_disturbance():
-    out =  "\n-------------------------------------------------------------------\n"
-    out += "!    MODEL FAILS - DISTURBANCE TORQUES EXCEED GENERATED TORQUE    !"
-    out += "\n-------------------------------------------------------------------\n"
-    print(Fore.RED + out + Fore.RESET)
-elif ((m1.max_voltage + m2.max_voltage + am.max_voltage) * current) > 0.84:
-    out =  "\n-------------------------------------------------------------------\n"
-    out += "!         MODEL FAILS - POWER REQUIREMENT EXCEEDS BUDGET          !"
-    out += "\n-------------------------------------------------------------------\n"
-    print(Fore.RED + out + Fore.RESET)
-elif (sim.convergence_time / Constants.SECONDS_PER_ORBIT) > 1:
-    out =  "\n-------------------------------------------------------------------\n"
-    out += "!       MODEL FAILS - CONVERGENCE TIME EXCEEDS ONE ORBIT          !"
-    out += "\n-------------------------------------------------------------------\n"
-    print(Fore.RED + out + Fore.RESET)
-else:
-    out =  "\n-------------------------------------------------------------------\n"
-    out += "!                          MODEL PASSES                           !"
-    out += "\n-------------------------------------------------------------------\n"
-    print(Fore.GREEN + out + Fore.RESET)
+    if (m1.dipole_moment() * Constants.EARTH_BFIELD_EQUATOR) < disturbances.total_disturbance():
+        out =  "\n-------------------------------------------------------------------\n"
+        out += "!    MODEL FAILS - DISTURBANCE TORQUES EXCEED GENERATED TORQUE    !"
+        out += "\n-------------------------------------------------------------------\n"
+        print(Fore.RED + out + Fore.RESET)
+    elif ((m1.max_voltage + m2.max_voltage + am.max_voltage) * current) > 0.84:
+        out =  "\n-------------------------------------------------------------------\n"
+        out += "!         MODEL FAILS - POWER REQUIREMENT EXCEEDS BUDGET          !"
+        out += "\n-------------------------------------------------------------------\n"
+        print(Fore.RED + out + Fore.RESET)
+    elif (sim.convergence_time / Constants.SECONDS_PER_ORBIT) > 1:
+        out =  "\n-------------------------------------------------------------------\n"
+        out += "!       MODEL FAILS - CONVERGENCE TIME EXCEEDS ONE ORBIT          !"
+        out += "\n-------------------------------------------------------------------\n"
+        print(Fore.RED + out + Fore.RESET)
+    else:
+        out =  "\n-------------------------------------------------------------------\n"
+        out += "!                          MODEL PASSES                           !"
+        out += "\n-------------------------------------------------------------------\n"
+        print(Fore.GREEN + out + Fore.RESET)
 
 
-print(m1)
+    print(m1)
+
+
+model_design()
