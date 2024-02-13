@@ -1,6 +1,0 @@
-﻿rtGetInf.obj
-rtGetNaN.obj
-rt_nonfinite.obj
-div_s32_floor.obj
-rt_nrand_Upu32_Yd_f_pw_snf.obj
-rt_urand_Upu32_Yd_f_pw_snf.obj
