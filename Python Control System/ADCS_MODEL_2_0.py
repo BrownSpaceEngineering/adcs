@@ -321,9 +321,10 @@ class MagnetorquerDesigner:
 
                     dipole_moment = new_torquer.dipole_moment() 
                     resistance = new_torquer.wire_resistance(self.temp)
+                    wire_length = new_torquer.wire_length()
 
                     if resistance <= 33: 
-                        point = (radius, core_radius, layer_val, resistance, dipole_moment)
+                        point = (radius, core_radius, layer_val, resistance, dipole_moment, wire_length)
                         
                         if dipole_moment > 0.2:
                             self.optimal_points.append(point)
@@ -358,16 +359,14 @@ class MagnetorquerDesigner:
         plt.show()
 
     def present_optimal_points(self):
-        print(f"POTENTIAL OPTIMAL POINTS:\n")
+        print(f"POTENTIAL OPTIMAL POINTS ({len(self.optimal_points)}/{len(self.data)}):\n")
 
         optimal_points = sorted(self.optimal_points, key=lambda x: x[4], reverse=True)
-        if len(optimal_points) > 5:
-            optimal_points = optimal_points[:5]
-            
-        for point in optimal_points:
-            point = list(map(lambda x: round(x, 5), point))
-            print(f"Total Radius: {point[0]} m, Core Radius: {point[1]} m, Layers: {point[2]}, Resistance: {point[3]} Ohms, Dipole Moment: {point[4]} A*m^2")
 
+        for point in optimal_points:
+            point = list(map(lambda x: round(x, 8), point))
+            print(f"Total Radius: {point[0]} m, Core Radius: {point[1]} m, Layers: {point[2]}, Length of wire: {point[5]} m, Resistance: {point[3]} Ohms, Dipole Moment: {point[4]} A*m^2")
+        
 def rigid_body_torque(mass, angle, diameter, time):
     '''
     param mass: mass of satellite in kg
