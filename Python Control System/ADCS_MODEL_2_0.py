@@ -309,7 +309,7 @@ class MagnetorquerDesigner:
         self.total_length = total_length
 
         self.core_radii = np.linspace(0.001, 0.01) # 1mm to 10mm 
-        self.layers = np.arange(1, 21) # 20 is the most possible layers before max_total_radius is exceeded
+        self.layers = np.arange(1, 20) # 20 is the most possible layers before max_total_radius is exceeded
         self.data = []
         self.optimal_points = []
 
