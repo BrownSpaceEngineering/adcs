@@ -1,0 +1,7 @@
+numpy==2.0.2
+GravityModels==0.1.0
+pyquaternion==0.9.9
+pymap3d==3.1.0
+pyorb==0.6.0
+igrf==13.0.2
+astropy==7.0.1
