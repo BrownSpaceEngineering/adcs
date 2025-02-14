@@ -2,7 +2,7 @@
 
 import numpy as np
 
-DT = 10
+DT = 5
 MAG_BIAS = 10
 PHOTO_BIAS = 0
 

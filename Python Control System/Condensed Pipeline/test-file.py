@@ -21,11 +21,13 @@ true_posn = iss_posn
 for i in range(int(90*60/constants.DT)):#1 revolution
     true_posn = support_functions.propagate_orbit(true_posn, constants.DT)
     time = datetime.now()
-    
-    xyz = support_functions.kep_to_cart(true_posn)[:3]
-    mag = support_functions.igdf_eci_vector(xyz[0], xyz[1], xyz[2], time) + np.random.normal(size = 3) * 2
-    magnetometer = true_rot.rotate(mag)
-    framework.propagate(magnetometer, time)
+    if(i%2):
+        xyz = support_functions.kep_to_cart(true_posn)[:3]
+        mag = support_functions.igdf_eci_vector(xyz[0], xyz[1], xyz[2], time) + np.random.normal(size = 3)
+        magnetometer = true_rot.rotate(mag)
+        framework.propagate(magnetometer, time)
+    else:
+        framework.propagate([], time)
     #sun = true_rot.rotate(support_functions.eci_sun_vector(time))
     #framework.propagate(np.concatenate([magnetometer, sun], axis = 0), time)
     distance = np.linalg.norm(support_functions.kep_to_cart(true_posn)[:3] - support_functions.kep_to_cart(framework.get_position_eci())[:3])

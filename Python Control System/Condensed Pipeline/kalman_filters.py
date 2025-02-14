@@ -75,6 +75,11 @@ class EKF(KalmanFilter):
 
 class QuatMEKF(KalmanFilter):
     '''Class detailing a Quaternion MEKF'''
+    def predict(self):
+        previous_quaternion = Quaternion(self.state_estimate[:4])
+        angular_velocities = self.state_estimate[4:]
+        estimated_quaternion = previous_quaternion + self.xi(previous_quaternion, angular_velocities)#estimate based on derivative
+        self.state_estimate = np.concatenate([estimated_quaternion.elements, angular_velocities], axis = 0)
     def xi(self, quaternion, angular_velocities):
         '''Calculates the xi function between the quaternion and the angular velocities'''
         angular_velocity_quat = Quaternion(scalar = 0, vector = angular_velocities*self.dt)
