@@ -1,5 +1,5 @@
 import math
-from kalman_filters import EKF, QuatMEKF
+from kalman_filters import EKF, QuaternionMEKF
 import support_functions
 import numpy as np
 from pyquaternion import Quaternion
@@ -66,7 +66,7 @@ class QUEST():
         alpha = proposed_eigen**2 - sigma**2 + kappa
         beta = proposed_eigen - sigma
         gamma = (proposed_eigen + sigma)*alpha - delta
-        X = -(alpha*np.eye(3) + beta*S + S@S)@Z#look idfk but my vectors were always off by a negative sign
+        X = (alpha*np.eye(3) + beta*S + S@S)@Z#look idfk but my vectors were always off by a negative sign
 
         return 1/math.sqrt(gamma**2 + (np.linalg.norm(X))**2) * Quaternion(scalar = gamma, vector = X)
     
@@ -78,7 +78,7 @@ class Framework():
         self.dt = constants.DT
         self.position = initial_position#should be in Kepler format
         self.rotation_quat = Quaternion(vector = [0, 0, 0], scalar = 1)
-        self.angular_velocities = np.array([0.001, 0.001, 0.001])
+        self.angular_velocities = np.array([0.0001, 0.0001, 0.0001])
         self.prev_quaternion_cov = np.eye(6) * 10000
 
         if(len(initial_readings) == 3):
@@ -108,13 +108,13 @@ class Framework():
             self.dt
         )
 
-        #State: [q0, q1, q2, q3, w_x, w_y, w_z], angular vels in RADIANS
+        #State: [q0, q1, q2, q3]
         #Observation: [q0, q1, q2, q3]
         
-        self.quaternion_estimation = QuatMEKF(
+        self.quaternion_estimation = QuaternionMEKF(
             constants.ROT_R,
             constants.ROT_Q,
-            np.concatenate([self.rotation_quat.elements, self.angular_velocities], axis = 0),
+            np.array([1, 0, 0, 0]),
             np.eye(6)*10000,
             self.dt
         )
@@ -128,7 +128,7 @@ class Framework():
         self.last_called = cur_time
         self.bdot_estimation.set_time(cur_time)
         self.orbit_determination.set_time(cur_time)
-        self.quaternion_estimation.set_time(cur_time)
+        #self.quaternion_estimation.set_time(cur_time)
 
         if(len(measurements) == 0):#if we received no measurements, just propagate forward
             self.bdot_estimation.predict()
@@ -157,7 +157,6 @@ class Framework():
             observed_vectors = [b, bdot]
             reference_vectors = [reference_b, reference_bdot]
             
-
             if(len(measurements) > 3):#if not in eclipse
                 if(self.throw_eclipse):
                     observed_vectors = [b]
@@ -173,19 +172,23 @@ class Framework():
             for vec in reference_vectors:
                 normalized_reference.append(vec / np.linalg.norm(vec))
             pred_quaternion = QUEST.QUEST(normalized_observed, normalized_reference)
-
-            self.quaternion_estimation.iterate(pred_quaternion)
-            state = self.quaternion_estimation.state_estimate
-            self.rotation_quat = Quaternion(state[:4])
-            self.angular_velocities = state[4:]
+            #predicted quaternion from ECI to body
+            print(pred_quaternion)
+            #rotates unit vectors from eci to body as "prediction" vectors
+            measurement_1 = pred_quaternion.rotate([0, 0, 1.0])
+            measurement_2 = pred_quaternion.rotate([0, 1.0, 0.0])
+            measurement_3 = pred_quaternion.rotate([1.0, 0.0, 0.0])
+            self.quaternion_estimation.iterate(np.concatenate([measurement_1, measurement_2, measurement_3], axis =0))
+            self.angular_velocities = self.quaternion_estimation.gyro_bias
+            #generates vector from body to ECI
 
     def get_rotation_from_eci(self):
         '''Gets the current believed rotation quaternion that goes from ECI frame to body frame'''
-        return Quaternion(self.quaternion_estimation.state_estimate[:4])
+        return self.quaternion_estimation.estimate
     
     def get_w(self):
         '''Gets the current believed angular velocities'''
-        return self.quaternion_estimation.state_estimate[4:7]
+        return self.quaternion_estimation.gyro_bias
     
     def get_position_eci(self, cartesian = False):
         '''Gets the current believed position in ECI(6 elements)'''

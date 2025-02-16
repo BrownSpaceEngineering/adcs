@@ -73,6 +73,74 @@ class EKF(KalmanFilter):
         self.state_estimate = self.state_estimate+ kalman_gain@residual
         self.covariance = (np.eye(len(self.state_estimate)) - kalman_gain@H)@self.covariance
 
+class QuaternionMEKF(KalmanFilter):
+    def __init__(self, observation_noise_matrix : NDArray[np.float64], 
+                 process_noise_matrix : NDArray[np.float64], 
+                 starting_state : NDArray[np.float64], 
+                 starting_covariance : NDArray[np.float64], 
+                 simulation_dt : int):
+        self.estimate = Quaternion(starting_state)
+        self.estimate_covariance = starting_covariance
+        self.observation_covariance = observation_noise_matrix
+        self.process_covariance = process_noise_matrix
+        self.gyro_bias = np.array([0.0, 0.0, 0.0])
+        self.dt = simulation_dt
+        self.G = np.zeros(shape=(6, 6), dtype=float)
+        self.G[0:3, 3:6] = -np.identity(3)
+
+    def predict(self):
+        gyro_meas = -self.gyro_bias
+        self.G[0:3, 0:3] = -self.skewSymmetric(gyro_meas)
+        F = np.identity(6, dtype=float) + self.G*self.dt
+        self.estimate_covariance = np.dot(np.dot(F, self.estimate_covariance), F.transpose()) + self.process_covariance
+        self.estimate = self.estimate + self.dt*0.5*self.estimate*Quaternion(scalar = 0, vector=-self.gyro_bias)
+        self.estimate = self.estimate.normalised
+        
+    def skewSymmetric(self, v):
+        return np.array([[0.0, -v[2], v[1]],
+                        [v[2], 0.0, -v[0]],
+                        [-v[1], v[0], 0.0]]) 
+        
+    def iterate(self, measurements):
+        time_delta = self.dt
+        
+        gyro_meas = -self.gyro_bias
+
+        #Integrate angular velocity through forming quaternion derivative
+        self.estimate = self.estimate + time_delta*0.5*self.estimate*Quaternion(scalar = 0, vector=gyro_meas)
+        self.estimate = self.estimate.normalised
+        
+        #Form process model
+        self.G[0:3, 0:3] = -self.skewSymmetric(gyro_meas)
+        F = np.identity(6, dtype=float) + self.G*time_delta
+
+        #Update with a priori covariance
+        self.estimate_covariance = np.dot(np.dot(F, self.estimate_covariance), F.transpose()) + self.process_covariance
+
+        #Form Kalman gain
+        H = np.zeros(shape=(9,6), dtype=float)
+        H[0:3, 0:3] = self.skewSymmetric(self.estimate.inverse.rotate(np.array([0.0, 0.0, 1.0])))
+        H[3:6, 0:3] = self.skewSymmetric(self.estimate.inverse.rotate(np.array([0, 1.0, 0])))
+        H[6:9, 0:3] = self.skewSymmetric(self.estimate.inverse.rotate(np.array([1.0, 0, 0])))
+        PH_T = np.dot(self.estimate_covariance, H.transpose())
+        inn_cov = H.dot(PH_T) + self.observation_covariance
+        K = np.dot(PH_T, np.linalg.inv(inn_cov))
+
+        #Update with a posteriori covariance
+        self.estimate_covariance = (np.identity(6) - np.dot(K, H)).dot(self.estimate_covariance)
+
+        predicted_observation = np.zeros(shape=(9, ), dtype=float)
+        predicted_observation[0:3] = self.estimate.inverse.rotate(np.array([0.0, 0.0, 1.0]))
+        predicted_observation[3:6] = self.estimate.inverse.rotate(np.array([0.0, 1.0, 0.0]))
+        predicted_observation[6:9] = self.estimate.inverse.rotate(np.array([1.0, 0.0, 0.0]))
+
+        aposteriori_state = np.dot(K, (measurements - predicted_observation).transpose())
+
+        #Fold filtered error state back into full state estimates
+        self.estimate = self.estimate * Quaternion(scalar = 1, vector = 0.5*aposteriori_state[0:3])
+        self.estimate = self.estimate.normalised
+        self.gyro_bias += aposteriori_state[3:6]
+
 class QuatMEKF(KalmanFilter):
     '''Class detailing a Quaternion MEKF'''
     def predict(self):
@@ -94,11 +162,12 @@ class QuatMEKF(KalmanFilter):
             [1, 0, 0, 0, 0, 0],
             [0, 1, 0, 0, 0, 0],
             [0, 0, 1, 0, 0, 0]
-        ])#the h function is assumed to simply return the angular component of the quaternion -- hence, the shape
-        F = np.concatenate([
-            np.concatenate([-self.cross_product_matrix(self.state_estimate[4:]), -np.eye(3)], axis = 1),
-            np.zeros((3,6))
         ])
+        #the h function is assumed to simply return the angular component of the quaternion -- hence, the shape
+        F = np.concatenate([
+            np.concatenate([-self.cross_product_matrix(self.state_estimate[4:]), np.zeros((3,3))], axis = 1),
+            np.zeros((3,6))
+        ])*self.dt + np.eye(6)
         #smart people found this based on the update function f(quaternion, w) = quaternion + xi(quaternion, w)
         #i am not smart people
 
