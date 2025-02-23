@@ -1,0 +1,32 @@
+%% Least Squares Sun Vector Triangulation
+
+d1 = [
+    [0,0,1]
+    [0,1,0]
+    [1,0,0]
+    [0.5,0.5,0.5]
+    ];
+d2 = -d1;
+
+sunTriangulationFunc(d1, r1, d2, r2)
+
+
+function v_sun = sunTriangulationFunc(diodes1, diodes2)
+
+    assert(isequal(size(d1), size(d2)))
+    assert(isequal(size(d1, 2), size(d2, 2), 3))
+    
+    
+    n = size(diodes1, 2);
+    saved_diodes = zeros(n, 3);
+    
+    for i=1:n
+        if
+    end
+
+    disp(diodes1)
+    disp(diodes2)
+
+end
+
+
