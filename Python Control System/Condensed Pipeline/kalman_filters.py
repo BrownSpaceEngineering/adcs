@@ -42,7 +42,7 @@ class KalmanFilter():
 
     def estimate_jacobian(self, f : Callable[NDArray[np.float64], NDArray[np.float64]],
                      state : NDArray[np.float64], #estimate jacobian at this state
-                      epsilon = 0.000001 #limit definition of the derivative applied to vectorvalued partials
+                      epsilon = 0.001 #limit definition of the derivative applied to vectorvalued partials
                      ):
         '''Estimates the Jacobian of a given function'''
         y = f(state)

@@ -6,16 +6,39 @@ from pyquaternion import Quaternion
 from numpy.typing import NDArray
 import constants
 from datetime import datetime
-class AttitudeIndependentOrbitPropagation(EKF):
-    def f(self, state):
-        return support_functions.propagate_orbit(state, self.dt)
+from filterpy.kalman import UnscentedKalmanFilter, MerweScaledSigmaPoints
+class AttitudeIndependentOrbitPropagation():
+    def __init__(self, observation_noise_matrix : NDArray[np.float64], 
+                 process_noise_matrix : NDArray[np.float64], 
+                 starting_state : NDArray[np.float64], 
+                 starting_covariance : NDArray[np.float64], 
+                 simulation_dt : int):
+        points = MerweScaledSigmaPoints(6, alpha=10, beta=2., kappa=-3)
+        self.kf = UnscentedKalmanFilter(dim_x=6, dim_z=1, dt=simulation_dt, fx=self.f, hx=self.h, points=points)
+        self.kf.x = support_functions.kep_to_cart(starting_state)
+        self.kf.P = starting_covariance
+        self.kf.Q = process_noise_matrix
+        self.kf.R = observation_noise_matrix
+
+    def f(self, state, dt):
+        g = support_functions.get_gravity_accel(state[:3])
+        return state + dt * np.concatenate([state[3:] + 1/2 * g * dt, g])
     def h(self, state):
-        cartesian_terms = support_functions.kep_to_cart(state)
-        mag_vec = support_functions.igdf_eci_vector(cartesian_terms[0], 
-                                                 cartesian_terms[1],
-                                                 cartesian_terms[2],
-                                                 self.time)
-        return np.array([np.linalg.norm(mag_vec)])
+        n = np.linalg.norm(support_functions.igdf_eci_vector(state[0], state[1], state[2], self.time))
+        return np.array([n])
+    def set_time(self, time):
+        self.time = time
+    def predict(self):
+        self.kf.predict()
+    def update(self, measurement):
+        self.kf.update(measurement)
+
+class OrbitalPropagator():
+    def __init__(self, starting_state, simulation_dt):
+        self.state = starting_state
+        self.dt = simulation_dt
+    def predict(self):
+        self.state = support_functions.propagate_orbit(self.state, self.dt)
     
 
 class BDotEstimation(EKF):
@@ -128,7 +151,7 @@ class Framework():
         self.last_called = cur_time
         self.bdot_estimation.set_time(cur_time)
         self.orbit_determination.set_time(cur_time)
-        #self.quaternion_estimation.set_time(cur_time)
+        self.quaternion_estimation.set_time(cur_time)
 
         if(len(measurements) == 0):#if we received no measurements, just propagate forward
             self.bdot_estimation.predict()
@@ -141,15 +164,15 @@ class Framework():
             
             self.magnetometer = measurements[:3]#definitely will be there
             #ORBITAL
-            last_position = self.get_position_eci(True)[:3]
-            self.orbit_determination.iterate(np.linalg.norm(self.magnetometer))
-            self.position = self.orbit_determination.state_estimate
-            new_position = self.get_position_eci(True)[:3]
+            last_position = self.get_position_eci()
+            self.orbit_determination.predict()
+            self.orbit_determination.update(np.linalg.norm(self.magnetometer))
+            new_position = self.get_position_eci()
 
             #ATTITUDE
             self.bdot_estimation.iterate(self.magnetometer)
             b = self.get_b()
-            bdot = self.get_bdot()
+            bdot = self.get_bdot() #assumed 0 angular velocity while in eclipse
 
             reference_b = support_functions.igdf_eci_vector(new_position[0], new_position[1], new_position[2], cur_time)
             reference_b_last = support_functions.igdf_eci_vector(last_position[0], last_position[1], last_position[2], last_time)
@@ -171,9 +194,8 @@ class Framework():
                 normalized_observed.append(vec / np.linalg.norm(vec))
             for vec in reference_vectors:
                 normalized_reference.append(vec / np.linalg.norm(vec))
-            pred_quaternion = QUEST.QUEST(normalized_observed, normalized_reference)
-            #predicted quaternion from ECI to body
-            print(pred_quaternion)
+            pred_quaternion = QUEST.QUEST(normalized_observed, normalized_reference) #predicted quaternion from ECI to body
+
             #rotates unit vectors from eci to body as "prediction" vectors
             measurement_1 = pred_quaternion.rotate([0, 0, 1.0])
             measurement_2 = pred_quaternion.rotate([0, 1.0, 0.0])
@@ -192,11 +214,8 @@ class Framework():
     
     def get_position_eci(self, cartesian = False):
         '''Gets the current believed position in ECI(6 elements)'''
-        current_position = self.orbit_determination.state_estimate
-        if(cartesian):
-            return support_functions.kep_to_cart(current_position)
-        else:
-            return current_position
+        current_position = self.orbit_determination.kf.x
+        return current_position
 
     def get_b(self):
         '''Gets the current believed magnetosphere influence'''
