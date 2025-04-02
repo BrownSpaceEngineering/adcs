@@ -9,6 +9,7 @@ from astropy.time import Time
 import math
 import numpy as np
 from numpy.typing import NDArray
+from pyquaternion import Quaternion
 
 #constants
 EARTH_SIM = SphericalHarmonics(Earth().sh_file, 4)
@@ -21,6 +22,7 @@ INV_BALLISTIC_COEFF = 70
 
 def get_drag_accel(velocity_vector : NDArray[np.float64]):
     '''Gets the drag acceleration vector'''
+    assert(len(velocity_vector) == 3)
     velocity = np.array([velocity_vector[0], velocity_vector[1], velocity_vector[2]])
     drag_direction = -velocity/np.linalg.norm(velocity)
     drag_coefficient = AIR_DENSITY * BODY_LENGTH * INV_BALLISTIC_COEFF
@@ -29,18 +31,27 @@ def get_drag_accel(velocity_vector : NDArray[np.float64]):
     return drag_direction * drag_acceleration
 
 def get_gravity_accel(position_vector : NDArray[np.float64]):
+    assert(len(position_vector) == 3)
     '''Gets the gravity acceleration vector'''
     return EARTH_SIM.compute_acceleration(np.array([position_vector]))[0]
 
 def propagate_orbit(kepler_start : NDArray[np.float64], duration : int):
-    '''Propagates an orbit around Earth for [duration] seconds '''
+    '''Propagates an orbit around Earth for [duration] seconds'''
+    assert(len(kepler_start) == 6)
     orb = orbit.Orbit(M0 = MASS_EARTH, kepler = kepler_start.reshape((6, 1)))
     orb.propagate(duration)
     return orb.kepler[:, 0]
 
 def kep_to_cart(kepler_arr : NDArray[np.float64]):
-    '''Kepler 6-element coordinates to cartesian 6-element coordinates'''
+    '''Kepler 6-element coordinates to Cartesian 6-element coordinates'''
+    assert(len(kepler_arr) == 6)
     return kepler.kep_to_cart(kep = kepler_arr, mu = MU_EARTH)
+
+def cart_to_kep(cart_arr : NDArray[np.float64]):
+    
+    '''Cartesian 6-element coordinates to Keplerian 6-element coordinates'''
+    assert(len(cart_arr) == 6)
+    return kepler.cart_to_kep(cart = cart_arr, mu = MU_EARTH)
 
 def igdf_eci_vector(x : float, y : float, z : float, time : datetime.time):
     '''Gets the IGDF Magnetic Field vector for an x, y, z in the ECI frame'''
@@ -51,16 +62,14 @@ def igdf_eci_vector(x : float, y : float, z : float, time : datetime.time):
     b_vec = np.array([b_x - x, b_y - y, b_z - z])
     return b_vec.reshape((3,))
 
-def right_ascension_to_longitude(right_ascension : np.float64, time : datetime.time):
+def _right_ascension_to_longitude(right_ascension : np.float64, time : datetime.time):
     #takes in degrees, returns values in degrees
-    #DO NOT USE THIS. THIS IS A HELPER
     current_time = Time(time)
     current_sidereal = current_time.sidereal_time('apparent', 'greenwich')
     return (math.degrees(right_ascension) - current_sidereal.degree) % 360
 
-def raw_sun_vector(time : datetime.time):
+def _raw_sun_vector(time : datetime.time):
     #returns values in DEGREES
-    #DO NOT USE THIS. THIS IS A HELPER
     date_relative_to_J2000 = (time - datetime(2000, 1, 1, 12, 0, 0)).days
     mean_longitude = (280.461 + 0.9856474 * date_relative_to_J2000) % 360
     mean_anomaly = (357.528 + 0.9856003 * date_relative_to_J2000) % 360
@@ -86,8 +95,8 @@ def raw_sun_vector(time : datetime.time):
 
 def eci_sun_vector(time : datetime.time):
     '''Gets the sun unit vector in the ECI frame for any given time'''
-    raw_sun_ra, sun_lat = raw_sun_vector(time)
-    sun_lon = right_ascension_to_longitude(raw_sun_ra, time)
+    raw_sun_ra, sun_lat = _raw_sun_vector(time)
+    sun_lon = _right_ascension_to_longitude(raw_sun_ra, time)
 
     ecef_sunx, ecef_suny, ecef_sunz = pymap3d.geodetic2ecef(sun_lat, sun_lon, 0)#vector that touches the surface
     sun_x, sun_y, sun_z = pymap3d.ecef2eci(ecef_sunx, ecef_suny, ecef_sunz, time)
@@ -97,6 +106,9 @@ def eci_sun_vector(time : datetime.time):
     return sun_unit_vec
 
 def quat_diff(q1, q2):
+    '''Calculates the Euler angle differences between two quaternions'''
+    assert(isinstance(q1, Quaternion))
+    assert(isinstance(q2, Quaternion))
     qd = q1.conjugate * q2
 
     # Calculate Euler angles from this difference quaternion

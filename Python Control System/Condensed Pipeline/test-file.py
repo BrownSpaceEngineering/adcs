@@ -1,38 +1,57 @@
-from main_structure import Framework
-import support_functions
 import math
+from kalman_filters import EKF, QuaternionMEKF
+import support_functions
 import numpy as np
-from datetime import datetime
-import constants
 from pyquaternion import Quaternion
+from numpy.typing import NDArray
+import constants
+from datetime import datetime
+from filterpy.kalman import UnscentedKalmanFilter, MerweScaledSigmaPoints
+class NoiseEstimator():
+    def __init__(self, observation_noise_matrix : NDArray[np.float64], 
+                 process_noise_matrix : NDArray[np.float64], 
+                 starting_state : NDArray[np.float64], 
+                 starting_covariance : NDArray[np.float64], 
+                 simulation_dt : int):
+        points = MerweScaledSigmaPoints(9, alpha=10, beta=2., kappa=-6)
+        self.kf = UnscentedKalmanFilter(dim_x=9, dim_z=1, dt=simulation_dt, fx=self.f, hx=self.h, points=points)
+        self.kf.x = np.concatenate([starting_state, np.zeros(6)], axis = 0)
+        self.kf.P = starting_covariance
+        self.kf.Q = process_noise_matrix
+        self.kf.R = observation_noise_matrix
 
-iss_posn = np.array([7e6, math.radians(0.05), math.radians(50), math.radians(311.6218), math.radians(199.2431), math.radians(48.4420)])
-xyz = support_functions.kep_to_cart(iss_posn)[:3]
-magnetometer = support_functions.igdf_eci_vector(xyz[0], xyz[1], xyz[2], datetime.now())
-framework = Framework(iss_posn, magnetometer, True)
-random_4 = []
-random_3 = [0.2, 0.3, 0.6]
-if(np.linalg.norm(random_3) < 1):
-    random_4 = np.array([random_3[0], random_3[1], random_3[2], math.sqrt(1 - np.linalg.norm(random_3)**2)])
+    def f(self, state, dt):
+        return state
+    def h(self, state):
+        B_k = state[:3]
+        S_k = np.diag(state[3:6])
+        bias_k = state[6:]
+        measurement = (S_k + np.eye(3))@B_k + bias_k
+        return np.array([np.linalg.norm(measurement)])
+    def set_time(self, time):
+        self.time = time
+    def predict(self):
+        self.kf.predict()
+    def update(self, measurement):
+        self.kf.update(measurement)
 
-true_rot = Quaternion(random_4)
-true_posn = iss_posn
 
-for i in range(int(90*60/constants.DT)):#1 revolution
-    true_posn = support_functions.propagate_orbit(true_posn, constants.DT)
-    time = datetime.now()
-    xyz = support_functions.kep_to_cart(true_posn)[:3]
-    mag = support_functions.igdf_eci_vector(xyz[0], xyz[1], xyz[2], time)
-    magnetometer = true_rot.rotate(mag)
-    sun = true_rot.rotate(support_functions.eci_sun_vector(time))
-    framework.propagate(np.concatenate([magnetometer + np.random.normal(scale = 3, size = 3), sun], axis = 0), time)
-    distance = np.linalg.norm(support_functions.kep_to_cart(true_posn)[:3] - support_functions.kep_to_cart(framework.get_position_eci())[:3])
-    print("KM OFFSET: %f", distance/1000)
-    print("REAL: ", true_rot)
-    print("PRED: ", framework.quaternion_estimation.estimate)
-    print("W: ", framework.quaternion_estimation.gyro_bias)
-    true_rot *= Quaternion(axis = [1, 0, 0], degrees = 0.5)
-    print("\n")
 
-print("KM OFFSET: %f", distance/1000)
-print("\n")
+true_scale_factors = np.array([1, 1, 1])
+true_measurement = np.array([10000, 0, 0])
+true_noise = 350
+
+estimator = NoiseEstimator(
+    np.eye(1) * 1000,
+    np.eye(9) * 1,
+    true_measurement,
+    np.diag([1,1,1,100, 100, 100,100000,100000,100000]),
+    1
+)
+for i in range(5000):
+    measurement = np.diag(true_scale_factors)@true_measurement + np.random.normal(size = 3, scale = 100, loc = true_noise)
+    estimator.predict()
+    estimator.update(np.array(np.linalg.norm([measurement])))
+print('MEAN: ', estimator.kf.x[:3])
+print('BIAS: ', estimator.kf.x[6:])
+print('SCALE FACTOR', np.ones(3) + estimator.kf.x[3:6])

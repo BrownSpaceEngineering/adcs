@@ -5,3 +5,6 @@ pymap3d==3.1.0
 pyorb==0.6.0
 igrf==13.0.2
 astropy==7.0.1
+filterpy==1.4.5
+matplotlib==3.10.0
+ipympl==0.9.6
