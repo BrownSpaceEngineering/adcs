@@ -1,0 +1,22 @@
+%ADCS structure to solve when given a magnetometer & sun sensor
+classdef TwoVectorADCS
+    properties
+        MEKF_filter;
+    end
+    methods
+        function self = TwoVectorADCS(starting_MEKF_rotation, starting_MEKF_w, ...
+                starting_MEKF_covariance)
+            self.MEKF_filter = MEKF(starting_MEKF_rotation, starting_MEKF_w, ...
+                starting_MEKF_covariance, constants.MEKF_process_noise_mat, ...
+                constants.MEKF_observation_noise_mat, constants.system_dt);
+        end
+        function self = iterate(observation_vectors, reference_vectors)
+            quest_guess = QuEST.QuEST_Algorithm(observation_vectors, reference_vectors);%gets a guess from QuEST
+            %gene
+            vec_1 = rotatepoint(quest_guess, [1,0,0]);
+            vec_2 = rotatepoint(quest_guess, [0,1,0]);
+            vec_3 = rotatepoint(quest_guess, [0,0,1]);
+            unit_vecs = [vec_1, vec_2, vec_3]
+        end
+    end
+end
